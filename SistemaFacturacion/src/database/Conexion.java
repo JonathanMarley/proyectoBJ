@@ -15,31 +15,11 @@ import javax.swing.JOptionPane;
  *
  * @author Usuario
  */
+
 public class Conexion {
-    
-        
-private final String DRIVER  = "com.mysql.jdbc.Driver";
-private final String URL  = "jdbc:mysql://localhost:3306/";
-private final String DB  = "dbsistema";
-private final String USER  = "root";
-private final String PASSWORD  = "";
-
-public Connection cadena;
-public static Conexion instancia;
-
-private Conexion(){
-    this.cadena = null;
-}
-
-public Connection conectar(){
-    try {
-        Class.forName(DRIVER);
-        this.cadena = DriverManager.getConnection(URL + DB, USER, PASSWORD);
-    } catch (ClassNotFoundException | SQLException e) {
-        JOptionPane.showMessageDialog(null,"CONEXION::conextar-> "+e.getMessage());
-        System.exit(0);
+    public static void main(String[] args) {
+        System.out.println("Hola");
     }
-    return this.cadena;
 }
  public void desconectar(){
      try {

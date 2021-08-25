@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+<<<<<<< Updated upstream
+            <file>file:/home/brayan/Documentos/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmCategoria.java</file>
+            <file>file:/home/brayan/Documentos/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/interfaces/ISimpleInterface.java</file>
+            <file>file:/home/brayan/Documentos/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/CategoriaDAO.java</file>
+            <file>file:/home/brayan/Documentos/Repositorios/proyectoBJ/SistemaFacturacion/src/database/PruebaConexion.java</file>
+            <file>file:/home/brayan/Documentos/Repositorios/proyectoBJ/SistemaFacturacion/src/database/Conexion.java</file>
+=======
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/CategoriaDAO.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presetancion/FrmPrincipal.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/identidades/Categorias.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/database/PruebaConexion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/database/Conexion.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presetancion/FrmCategoria.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/Interface/ISimpleInterface.java</file>
+>>>>>>> Stashed changes
+        </group>
+    </open-files>
+</project-private>
