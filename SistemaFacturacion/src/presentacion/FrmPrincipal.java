@@ -72,6 +72,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         saveMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Productos");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(saveMenuItem);
 
         menuBar.add(fileMenu);
@@ -174,6 +179,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        // TODO add your handling code here:
+        FrmArticulo frm = new FrmArticulo();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_saveMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
