@@ -5,28 +5,28 @@
  */
 package datos;
 
-import datos.Interface.ISimpleInterface;
-import identidades.Categorias;
+import datos.interfaces.ISimpleInterface;
+import entidades.Categoria;
 import java.util.List;
 
 /**
  *
- * @author Usuario
+ * @author brayan
  */
-public class CategoriaDAO implements ISimpleInterface<Categorias>{
+public class CategoriaDAO implements ISimpleInterface<Categoria> {
 
     @Override
-    public List<Categorias> Listar(String texto) {
+    public List<Categoria> listar(String texto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean insertar(Categorias obj) {
+    public boolean insertar(Categoria obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean actualizar(Categorias obj) {
+    public boolean actualizar(Categoria obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -36,7 +36,7 @@ public class CategoriaDAO implements ISimpleInterface<Categorias>{
     }
 
     @Override
-    public boolean insertar(int id) {
+    public boolean activar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
