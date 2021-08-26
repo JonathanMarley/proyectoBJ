@@ -5,17 +5,42 @@
  */
 package presentacion;
 
+import javax.swing.JOptionPane;
+import negocio.CategoriaControl;
+
 /**
  *
  * @author brayan
  */
 public class FrmCategoria extends javax.swing.JInternalFrame {
 
+    private final CategoriaControl CONTROL;
+    private String accion;
+    private String nombreAnt;
+    
     /**
      * Creates new form FrmCategoria
      */
     public FrmCategoria() {
         initComponents();
+        this.CONTROL = new CategoriaControl();
+        txtId.setVisible(false);
+        this.accion = "guardar";
+        tabGeneral.setEnabledAt(1, false); //Pestaña Mantenimiento inactiva
+    }
+    
+    private void limpiar() {
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        this.accion = "guardar";
+    }
+    
+    private void mensaje(String mensaje, String tipo) {
+        if (tipo.equals("correcto")) {
+            JOptionPane.showMessageDialog(this, mensaje, "ProyectoBJ", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, mensaje, "ProyectoBJ", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -63,6 +88,11 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         btnBuscar.setText("Buscar");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
 
@@ -147,8 +177,18 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         jLabel4.setText("(*) Indica que es un campo obligatorio");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,6 +253,54 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (txtNombre.getText().length() == 0 || txtNombre.getText().length() > 35) {
+            this.mensaje("Debes ingresar un nombre y no deber ser mayor de 35 caracteres, es obligatorio", "error");
+            txtNombre.requestFocus(); //Posicionar el cursor en el textfield
+            return;
+        }
+        if (txtDescripcion.getText().length() > 255) {
+            this.mensaje("Debes ingresar una descripcion y no deber ser mayor de 255 caracteres, es obligatorio", "error");
+            txtDescripcion.requestFocus(); //Posicionar el cursor en el textfiel
+            return;
+        }
+        
+        String respuesta;
+        if (this.accion.equals("editar")) {
+            //EDITAR
+            
+        } else {
+            //GUARDAR
+            
+            respuesta = this.CONTROL.insertar(txtNombre.getText(), txtDescripcion.getText());
+            if (respuesta.equals("OK")) {
+                this.mensaje("Registrado correctamente", "correcto");
+                this.limpiar();
+                
+            } else {
+                this.mensaje(respuesta, "error");
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        tabGeneral.setEnabledAt(1, true); //Pestaña Mantenimiento activada
+        tabGeneral.setEnabledAt(0, false); //Pestaña listado desactivada
+        tabGeneral.setSelectedIndex(1); //Lleva a la pestaña de mantenemiento
+        this.accion = "guardar";
+        btnGuardar.setText("Guardar");
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        tabGeneral.setEnabledAt(0, true); //Pestaña listado activada
+        tabGeneral.setEnabledAt(1, false); //Pestaña Mantenimiento desactivada
+        tabGeneral.setSelectedIndex(0); //Lleva a la pestaña de listado
+        this.limpiar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
