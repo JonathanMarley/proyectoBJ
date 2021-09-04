@@ -5,7 +5,10 @@
  */
 package presentacion;
 
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableRowSorter;
 import negocios.ArticuloControl;
 
 /**
@@ -15,6 +18,12 @@ import negocios.ArticuloControl;
 public class FrmArticulo extends javax.swing.JInternalFrame {
   
     private final ArticuloControl CONTROL;
+    
+    //VARIABLES DE PAGINACION
+    private int totalPorPagina = 10;
+    private int numPagina = 1;
+    private boolean primeracargar = true;
+    private int totalRegistros; 
     /**
      * Creates new form FrmArticulo
      */
@@ -22,10 +31,50 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         initComponents();
         this.CONTROL = new ArticuloControl();
         this.cargarCategoria();
+        this.paginar();
+        this.listar("", false);
+        this.primeracargar = false;
     }
     private void cargarCategoria() {
        DefaultComboBoxModel items = this.CONTROL.llenarCombobox();
        cboCategoria.setModel(items);
+    }
+    
+    private void paginar(){
+        try {
+            int totalPaginas;
+        
+        this.totalRegistros = this.CONTROL.total();
+        this.totalPorPagina = Integer.parseInt((String)cboTotalPorPagina.getSelectedItem());
+        totalPaginas = (int ) (Math.ceil((double) this.totalRegistros / this.totalPorPagina));
+        if (totalPaginas == 0) {
+            totalPaginas = 1;
+        }
+        cboNumPagina.removeAllItems();
+        
+        for (int i = 1; i <= totalPaginas; i++) {
+            cboNumPagina.addItem(Integer.toString(i));
+        }
+        cboNumPagina.setSelectedIndex(0);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArticuloDAO::listar->" + e.getMessage());
+        }
+        
+    }
+    
+    private void listar(String texto, boolean paginar){
+        this.totalPorPagina = Integer.parseInt((String) cboTotalPorPagina.getSelectedItem());
+        if ((String) cboNumPagina.getSelectedItem() != null){
+        this.numPagina = Integer.parseInt((String) cboNumPagina.getSelectedItem());
+    }
+        if (paginar) {
+            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPorPagina, this.numPagina));
+        }else{
+            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPorPagina, 1));
+        }
+        TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
+        tablaListado.setRowSorter(orden);
+        lblTotalRegistros.setText("Mostrado "+this.CONTROL.totalMostrados()+ "de un total " + this.CONTROL.total() + "registros");
     }
 
     /**
@@ -47,7 +96,6 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaListado = new javax.swing.JTable();
-        cboNumPagina = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         cboTotalPorPagina = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -56,6 +104,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         btnDesactivar = new javax.swing.JButton();
         btnImagen = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
+        cboNumPagina = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         cboCategoria = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -86,10 +135,18 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nombre");
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Buscar (2).png"))); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/nuevo.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/actualizar.png"))); // NOI18N
         btnEditar.setText("Editar");
 
         tablaListado.setModel(new javax.swing.table.DefaultTableModel(
@@ -105,18 +162,33 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         jLabel2.setText("N Pagina");
 
         cboTotalPorPagina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "20", "50", "100", "200", "500" }));
+        cboTotalPorPagina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTotalPorPaginaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Total de registro por pagina");
 
         lblTotalRegistros.setText("Registros");
 
+        btnActivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/cambiar.png"))); // NOI18N
         btnActivar.setText("Activar");
 
+        btnDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/apagar (1).png"))); // NOI18N
         btnDesactivar.setText("Desactivar");
 
+        btnImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/imagen.png"))); // NOI18N
         btnImagen.setText("Imagen");
 
+        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Ver Ingreso.png"))); // NOI18N
         btnVer.setText("Ver");
+
+        cboNumPagina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboNumPaginaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,17 +203,17 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(btnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEditar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(jLabel2)
-                        .addGap(2, 2, 2)
-                        .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3)
                         .addComponent(cboTotalPorPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,9 +227,9 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnDesactivar)
                 .addGap(18, 18, 18)
-                .addComponent(btnImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -171,19 +243,19 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                     .addComponent(btnNuevo)
                     .addComponent(btnEditar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
-                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(cboTotalPorPagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(lblTotalRegistros))
-                .addGap(44, 44, 44)
+                    .addComponent(lblTotalRegistros)
+                    .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActivar)
                     .addComponent(btnDesactivar)
-                    .addComponent(btnImagen)
+                    .addComponent(btnImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVer))
                 .addGap(77, 77, 77))
         );
@@ -220,8 +292,10 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Descripcion");
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/disquete.png"))); // NOI18N
         btnGuardar.setText("Guardar");
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
 
         jLabel11.setText("(*) Indica que es un campo obligatorio");
@@ -242,29 +316,30 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
                             .addComponent(jLabel10))
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNomrbe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
                                 .addGap(54, 54, 54)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNomrbe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(247, 247, 247)
-                        .addComponent(btnGuardar)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(392, Short.MAX_VALUE))
+                                .addComponent(btnCancelar))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,22 +372,18 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(jLabel9)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addGap(79, 79, 79)
                         .addComponent(jLabel10)
-                        .addGap(174, 174, 174))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGuardar)
-                            .addComponent(btnCancelar))
-                        .addGap(24, 24, 24))))
+                        .addGap(9, 9, 9)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
+                .addGap(57, 57, 57))
         );
 
         tabGeneral.addTab("Mantenimiento", jPanel2);
@@ -330,6 +401,25 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cboNumPaginaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNumPaginaActionPerformed
+        // TODO add your handling code here:
+        if (!this.primeracargar) {
+            this.listar("", true);
+        }
+        
+        
+    }//GEN-LAST:event_cboNumPaginaActionPerformed
+
+    private void cboTotalPorPaginaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTotalPorPaginaActionPerformed
+        // TODO add your handling code here:
+        this.paginar();
+    }//GEN-LAST:event_cboTotalPorPaginaActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        this.listar(txtBuscar.getText(), false);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

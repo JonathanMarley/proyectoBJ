@@ -41,6 +41,7 @@ public class CategoriaControl {
         this.modeloTabla = new DefaultTableModel(null, titulos);
         
         String estado;
+        this.registroMostrados = 0;
         String[] registro = new String[4];
         
         for (Categoria item: lista) {
