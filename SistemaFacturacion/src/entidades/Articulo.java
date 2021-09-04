@@ -115,12 +115,6 @@ public class Articulo {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-    public String getDescripcion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
+    }    
     
 }

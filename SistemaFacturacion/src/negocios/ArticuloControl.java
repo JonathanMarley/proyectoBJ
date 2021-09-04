@@ -27,12 +27,12 @@ public class ArticuloControl {
     private DefaultTableModel modelTabla;
     private int registrosMostrados;
     private DefaultTableModel modeloTabla;
-    private int registroMostrados;
     
      
      public ArticuloControl(){
          this.DATOSCAT = new CategoriaDAO();
          this.DATOS = new ArticuloDao();
+         this.registrosMostrados = 0;
      }
      
       public DefaultTableModel listar(String texto, int totalPorPagina, int numPagina){
@@ -47,7 +47,7 @@ public class ArticuloControl {
         this.modeloTabla = new DefaultTableModel(null, titulos);
         
         String estado;
-        this.registroMostrados = 0;
+        this.registrosMostrados = 0;
         String[] registro = new String[10];
         
         for (Articulo item: lista) {
@@ -56,20 +56,24 @@ public class ArticuloControl {
             }else{
                 estado = "Inactivo";
             }
-            registro[0] = Integer.toString(item.getId());
-            registro[1] = Integer.toString(item.getCategoriaId());
-            registro[2] = item.getCategoriaNombre();
-            registro[3] = item.getCodigo();
-            registro[4] = item.getNombre();
+            registro[0] = Integer.toString(item.getId());      
+            registro[1] = Integer.toString(item.getCategoriaId());      
+            registro[2] = item.getCategoriaNombre();       
+            registro[3] = item.getCodigo();       
+            registro[4] = item.getNombre();       
             registro[5] = Double.toString(item.getPrecioVenta());
+            System.out.println("PASO getPrecioVenta");        
             registro[6] = Integer.toString(item.getStock());
-            registro[7] = item.getDescripcion();
+            System.out.println("PASO getStock");        
+            registro[7] = item.getDespcricion();
+            System.out.println("PASO getDescripcion");        
             registro[8] = item.getImagen();
+            System.out.println("PASO getImagen");        
             registro[9] = estado;
             
             
             this.modeloTabla.addRow(registro);
-            this.registroMostrados = this.registroMostrados +1;
+            this.registrosMostrados = this.registrosMostrados +1;
             
     
         }
@@ -96,7 +100,7 @@ public class ArticuloControl {
      }
      
      public int totalMostrados(){
-         return this.registroMostrados;
+         return this.registrosMostrados;
      }
     
 }
