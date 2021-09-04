@@ -6,6 +6,7 @@
 package presentacion;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.TableRowSorter;
 import negocio.CategoriaControl;
 
 /**
@@ -17,7 +18,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     private final CategoriaControl CONTROL;
     private String accion;
     private String nombreAnt;
-    
+
     /**
      * Creates new form FrmCategoria
      */
@@ -27,14 +28,16 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         txtId.setVisible(false);
         this.accion = "guardar";
         tabGeneral.setEnabledAt(1, false); //Pestaña Mantenimiento inactiva
+        this.listar("");
+        btnGuardar.setEnabled(true);
     }
-    
+
     private void limpiar() {
         txtNombre.setText("");
         txtDescripcion.setText("");
         this.accion = "guardar";
     }
-    
+
     private void mensaje(String mensaje, String tipo) {
         if (tipo.equals("correcto")) {
             JOptionPane.showMessageDialog(this, mensaje, "ProyectoBJ", JOptionPane.INFORMATION_MESSAGE);
@@ -43,6 +46,34 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         }
     }
 
+    private void listar(String texto) {
+        tablaListado.setModel(this.CONTROL.listar(texto));
+        TableRowSorter orden = new TableRowSorter(tablaListado.getModel()); //Opciones de ordenamiento en la tabla
+        tablaListado.setRowSorter(orden);
+        lblTotalRegistros.setText("Mostrando "+ this.CONTROL.totalMostrados() + " de un total de "+ this.CONTROL.total() + " registros");
+    }
+
+    private void pestaniaFrame(String tipo) {
+        if (tipo.equalsIgnoreCase("listado")) {
+            tabGeneral.setSelectedIndex(0);
+            tabGeneral.setEnabledAt(0, true); //Pestaña listado activada
+            tabGeneral.setEnabledAt(1, false);//Pestaña Mantenimiento desactivada
+        } else {
+            tabGeneral.setEnabledAt(1, true); //Pestaña Mantenimiento activada
+            tabGeneral.setEnabledAt(0, false); //Pestaña listado desactivada
+            tabGeneral.setSelectedIndex(1);
+        }
+    }
+
+    private void confirmacion(String resp, String mensaje) {
+        if (resp.equals("OK")) {
+            this.mensaje("Categoria "+mensaje, "correcto");
+            this.listar("");
+        } else {
+            this.mensaje(resp, "error");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +117,11 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         jLabel2.setText("Nombre:");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +131,11 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         tablaListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,10 +148,25 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tablaListado);
 
         btnActivar.setText("Activar");
+        btnActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarActionPerformed(evt);
+            }
+        });
 
         btnDesactivar.setText("Desactivar");
+        btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarActionPerformed(evt);
+            }
+        });
 
         btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
 
         lblTotalRegistros.setText("Registros");
 
@@ -266,19 +322,27 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
             txtDescripcion.requestFocus(); //Posicionar el cursor en el textfiel
             return;
         }
-        
+
         String respuesta;
         if (this.accion.equals("editar")) {
             //EDITAR
-            
+            respuesta = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), txtNombre.getText(), this.nombreAnt, txtDescripcion.getText());
+            if (respuesta.equals("OK")) {
+                this.mensaje("Actualizado correctamente", "correcto");
+                this.limpiar();
+                this.listar("");
+                this.pestaniaFrame("Listado");
+            } else {
+                this.mensaje(respuesta, "error");
+            }
         } else {
             //GUARDAR
-            
+
             respuesta = this.CONTROL.insertar(txtNombre.getText(), txtDescripcion.getText());
             if (respuesta.equals("OK")) {
                 this.mensaje("Registrado correctamente", "correcto");
                 this.limpiar();
-                
+                this.listar("");
             } else {
                 this.mensaje(respuesta, "error");
             }
@@ -287,20 +351,100 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        tabGeneral.setEnabledAt(1, true); //Pestaña Mantenimiento activada
-        tabGeneral.setEnabledAt(0, false); //Pestaña listado desactivada
-        tabGeneral.setSelectedIndex(1); //Lleva a la pestaña de mantenemiento
+        this.pestaniaFrame("Mantenimiento");
         this.accion = "guardar";
         btnGuardar.setText("Guardar");
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        tabGeneral.setEnabledAt(0, true); //Pestaña listado activada
-        tabGeneral.setEnabledAt(1, false); //Pestaña Mantenimiento desactivada
-        tabGeneral.setSelectedIndex(0); //Lleva a la pestaña de listado
+        this.pestaniaFrame("Listado");
         this.limpiar();
+        btnGuardar.setEnabled(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        this.listar(txtBuscar.getText());
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) { //El usuario si selecciono una fila de la tabla
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            this.nombreAnt = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            String descripcion = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
+
+            txtId.setText(id);
+            txtNombre.setText(nombre);
+            txtDescripcion.setText(descripcion);
+
+            this.pestaniaFrame("Mantenimiento");
+            this.accion = "editar";
+            btnGuardar.setText("Editar");
+        } else {
+            this.mensaje("Seleccione 1 registro a editar", "error");
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+        // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Activo")) {
+                this.mensaje("El registros ya esta activo, no se puede activar de nuevo", "error");
+                return;
+            } else {
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar la categoria "+ nombre +" ?", "ProyectBJ", JOptionPane.YES_NO_OPTION) == 0) {
+                    String resp = this.CONTROL.activar(Integer.parseInt(id));
+                    this.confirmacion(resp, "Activada");
+                }
+            }
+        } else {
+            this.mensaje("Seleccione 1 registro para activar", "error");
+        }
+    }//GEN-LAST:event_btnActivarActionPerformed
+
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
+        // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Inactivo")) {
+                this.mensaje("El registros ya esta inactivo, no se puede desactivar nuevamente", "error");
+                return;
+            } else {
+                if (JOptionPane.showConfirmDialog(this, "Deseas desactivar la categoria "+ nombre +" ?", "ProyectBJ", JOptionPane.YES_NO_OPTION) == 0) {
+                    String resp = this.CONTROL.desactivar(Integer.parseInt(id));
+                    this.confirmacion(resp, "Desactivada");
+                }
+            }
+        } else {
+            this.mensaje("Seleccione 1 registro para desactivar", "error");
+        }
+    }//GEN-LAST:event_btnDesactivarActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) { //El usuario si selecciono una fila de la tabla
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            String descripcion = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
+
+            txtId.setText(id);
+            txtNombre.setText(nombre);
+            txtDescripcion.setText(descripcion);
+            btnGuardar.setEnabled(false);
+
+            this.pestaniaFrame("Mantenimiento");
+        } else {
+            this.mensaje("Seleccione 1 registro a editar", "error");
+        }
+    }//GEN-LAST:event_btnVerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -329,4 +473,5 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
 }
