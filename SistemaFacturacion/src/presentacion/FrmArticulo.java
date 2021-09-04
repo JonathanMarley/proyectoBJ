@@ -5,17 +5,27 @@
  */
 package presentacion;
 
+import javax.swing.DefaultComboBoxModel;
+import negocio.ArticuloControl;
+
 /**
  *
  * @author brayan
  */
 public class FrmArticulo extends javax.swing.JInternalFrame {
-
+    private final ArticuloControl CONTROL;
     /**
      * Creates new form FrmArticulo
      */
     public FrmArticulo() {
         initComponents();
+        this.CONTROL = new ArticuloControl();
+        this.cargarCategorias();
+    }
+    
+    private void cargarCategorias() {
+        DefaultComboBoxModel items = this.CONTROL.llenarCombobox();
+        cboCategoria.setModel(items);
     }
 
     /**
@@ -363,4 +373,5 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
+
 }
