@@ -5,6 +5,8 @@
  */
 package entidades;
 
+import java.util.Objects;
+
 /**
  *
  * @author brayan
@@ -19,10 +21,15 @@ public class Categoria {
     }
 
     public Categoria(int id, String nombre, String descripcion, boolean activo) {
+        this.id = id; //1
+        this.nombre = nombre; //Computacion
+        this.descripcion = descripcion;// ""
+        this.activo = activo;
+    }
+
+    public Categoria(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.activo = activo;
     }
 
     public int getId() {
@@ -56,4 +63,47 @@ public class Categoria {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + this.id;
+        hash = 23 * hash + Objects.hashCode(this.nombre);
+        hash = 23 * hash + Objects.hashCode(this.descripcion);
+        hash = 23 * hash + (this.activo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Categoria other = (Categoria) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.activo != other.activo) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        return true;
+    }
+    
 }

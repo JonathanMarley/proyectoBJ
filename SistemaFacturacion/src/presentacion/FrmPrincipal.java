@@ -53,12 +53,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuBar.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         menuBar.setPreferredSize(new java.awt.Dimension(181, 45));
 
+        fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Categoria.png"))); // NOI18N
         fileMenu.setMnemonic('f');
         fileMenu.setText("Almacen");
         fileMenu.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         openMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        openMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Categoria.png"))); // NOI18N
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Categorias");
         openMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +72,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         saveMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        saveMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Articulos.png"))); // NOI18N
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Productos");
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
