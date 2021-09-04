@@ -44,6 +44,7 @@ public class CategoriaControl {
             String estado;
             String[] registro = new String[4];
             
+            this.registrosMostrados = 0;
             for (Categoria item : lista) {
                 //1 = true
                 //0 = false
