@@ -5,6 +5,8 @@
  */
 package presentacion;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author brayan
@@ -17,6 +19,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public FrmPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        setIconImage(new ImageIcon(getClass().getResource("imagenes/ordenador-personal.png/")).getImage());
     }
 
     /**

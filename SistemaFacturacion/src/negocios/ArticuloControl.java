@@ -33,6 +33,8 @@ public class ArticuloControl {
          this.DATOSCAT = new CategoriaDAO();
          this.DATOS = new ArticuloDao();
          this.registrosMostrados = 0;
+         this.obj = new Articulo();
+         this.registrosMostrados = 0;
      }
      
       public DefaultTableModel listar(String texto, int totalPorPagina, int numPagina){
@@ -62,13 +64,13 @@ public class ArticuloControl {
             registro[3] = item.getCodigo();       
             registro[4] = item.getNombre();       
             registro[5] = Double.toString(item.getPrecioVenta());
-            System.out.println("PASO getPrecioVenta");        
+            
             registro[6] = Integer.toString(item.getStock());
-            System.out.println("PASO getStock");        
+      
             registro[7] = item.getDespcricion();
-            System.out.println("PASO getDescripcion");        
+            
             registro[8] = item.getImagen();
-            System.out.println("PASO getImagen");        
+       
             registro[9] = estado;
             
             
@@ -95,6 +97,76 @@ public class ArticuloControl {
          }
          return items;
      }
+     
+      public String insertar( int categoriaId, String codigo, String nombre, double precioVenta,int stock, String descripcion, String imagen ){
+        try {
+            if (DATOS.existe(nombre)) {
+                return "El registro ya existe";
+            }else{
+                System.out.println("Hola");
+                obj.setCategoriaId(categoriaId);
+                System.out.println("Paso");
+                obj.setCodigo(codigo);
+                obj.setNombre(nombre);
+                obj.setPrecioVenta(precioVenta);
+                obj.setStock(stock);
+                obj.setDespcricion(descripcion);
+                obj.setImagen(imagen);
+                if (DATOS.insertar(obj)) {
+                    return "OK";
+                }else{
+                    return "Error en el registro";
+                }
+            }
+        } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "ArticuloControl::insertar-> " + e.getMessage());
+
+        }
+        return"";
+    }
+    
+    public String actualizar(int id,int categoriaId, String codigo, String nombre,String nombreAnt, double precioVenta,int stock, String descripcion, String imagen){
+        try {
+            if (nombre.equals(nombreAnt)) {
+                obj.setId(id);
+                obj.setCategoriaId(categoriaId);
+                obj.setCodigo(codigo);
+                obj.setNombre(nombre);
+                obj.setPrecioVenta(precioVenta);
+                obj.setStock(stock);
+                obj.setDespcricion(descripcion);
+                obj.setImagen(imagen);
+                if (DATOS.actualizar(obj)) {
+                    return "OK";
+                }else{
+                    return "Error en la actualizacion";
+                }
+            }else{
+                if (DATOS.existe(nombre)) {
+                    return "El registro ya existe";
+                }else{
+                 obj.setId(id);
+                obj.setCategoriaId(categoriaId);
+                obj.setCodigo(codigo);
+                obj.setNombre(nombre);
+                obj.setPrecioVenta(precioVenta);
+                obj.setStock(stock);
+                obj.setDespcricion(descripcion);
+                obj.setImagen(imagen);
+                
+                if (DATOS.actualizar(obj)) {
+                    return "OK";
+                }else{
+                    return "Error en la actualizacion";
+                }   
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "articuloControl::actualizar " + e.getMessage());
+        }
+        return "NULL";
+    }
+     
       public int total(){
          return DATOS.total();
      }

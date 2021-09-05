@@ -115,6 +115,5 @@ public class Articulo {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }    
-    
+    }
 }
