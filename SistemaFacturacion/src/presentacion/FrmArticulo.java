@@ -5,7 +5,20 @@
  */
 package presentacion;
 
+import entidades.Categoria;
+import java.awt.Desktop;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.ArticuloControl;
 
@@ -15,13 +28,21 @@ import negocio.ArticuloControl;
  */
 public class FrmArticulo extends javax.swing.JInternalFrame {
     private final ArticuloControl CONTROL;
-    
+    private String accion; 
+    private String nombreAnt; 
     
 //    VARIABLES DE PAGINACION
     private int totalPorPagina = 10;
     private int numPagina = 1;
     private boolean primeraCarga = true;
     private int totalRegistros;
+    
+    //VARIABLES PARA GUARDAR LA IMAGEN
+    private String rutaOrigen;
+    private String rutaDestino;
+    private final String DIRECTORIO = "src/file/articulos/";
+    private String imagen = "";
+    private String imagenAnt;
     
     
     /**
@@ -34,6 +55,9 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         this.paginar();
         this.listar("", false);
         this.primeraCarga = false;
+        tabGeneral.setEnabledAt(1, false);
+        txtId.setVisible(false);
+        this.accion = "guardar";
     }
     
     private void cargarCategorias() {
@@ -61,9 +85,11 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
     }
     
     private void listar(String texto, boolean paginar) {
-        this.totalPorPagina = Integer.parseInt((String) cboTotalPorPagina.getSelectedItem()); //10
+        //Obteniendo el valor seleccionado por el usuario del combobox cboTotalPorPagina
+        this.totalPorPagina = Integer.parseInt((String) cboTotalPorPagina.getSelectedItem()); 
         if ((String) cboNumPagina.getSelectedItem() != null) {
-            this.numPagina = Integer.parseInt((String) cboNumPagina.getSelectedItem()); //2
+            //Obteniendo el valor seleccionado por el usuario del combobox cboNumPagina
+            this.numPagina = Integer.parseInt((String) cboNumPagina.getSelectedItem()); 
         }
         
         if (paginar){
@@ -73,9 +99,78 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         }
         TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
         tablaListado.setRowSorter(orden);
+        this.ocultarColumnas();
         lblTotalRegistros.setText("Mostrando "+ this.CONTROL.totalMostrados() + " de un total "+ this.CONTROL.total() + " registros");
     }
+    
+    private void ocultarColumnas() {
+        //OCULTANDO LA COLUMNA CATEGORIA ID
+        tablaListado.getColumnModel().getColumn(1).setMaxWidth(0);//Seteando un ancho maximo
+        tablaListado.getColumnModel().getColumn(1).setMinWidth(0);//Seteando un ancho minimo
+        tablaListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0); //Seteando un ancho maximo al titulo Categoria ID
+        tablaListado.getTableHeader().getColumnModel().getColumn(1).setMinWidth(0); //Seteando un ancho minimo al titulo Categoria ID
+        
+        //OCULTANDO LA COLUMNA IMAGEN
+        tablaListado.getColumnModel().getColumn(8).setMaxWidth(0);//Seteando un ancho maximo
+        tablaListado.getColumnModel().getColumn(8).setMinWidth(0);//Seteando un ancho minimo
+        tablaListado.getTableHeader().getColumnModel().getColumn(8).setMaxWidth(0); //Seteando un ancho maximo al titulo Categoria ID
+        tablaListado.getTableHeader().getColumnModel().getColumn(8).setMinWidth(0); //Seteando un ancho minimo al titulo Categoria ID
+    }
+    
+    private void pestaniaFrame(String tipo) {
+        if (tipo.equalsIgnoreCase("listado")) {
+            tabGeneral.setSelectedIndex(0);
+            tabGeneral.setEnabledAt(0, true); //Pestaña listado activada
+            tabGeneral.setEnabledAt(1, false);//Pestaña Mantenimiento desactivada
+        } else {
+            tabGeneral.setEnabledAt(1, true); //Pestaña Mantenimiento activada
+            tabGeneral.setEnabledAt(0, false); //Pestaña listado desactivada
+            tabGeneral.setSelectedIndex(1);
+        }
+    }
+    
+    private void limpiar() {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtId.setText("");
+        txtPrecioVenta.setText("");
+        txtStock.setText("");
+        lblImagen.setIcon(null);
+        this.imagen = "";
+        this.imagenAnt = "";
+        this.rutaDestino = "";
+        this.rutaOrigen = "";
+        this.accion = "guardar";
+    }
+    
+    private void mensaje(String mensaje, String tipo) {
+        if (tipo.equals("correcto")) {
+            JOptionPane.showMessageDialog(this, mensaje, "ProyectoBJ", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, mensaje, "ProyectoBJ", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
+    private void subirImagenes() {
+        File origen = new File(this.rutaOrigen); 
+        File destino = new File(this.rutaDestino);
+        try {
+            InputStream in = new FileInputStream(origen); //in = Entrada
+            OutputStream out = new FileOutputStream(destino);// out = fuera
+            byte[] buf = new byte[1024];
+            int lectura;
+            while ((lectura = in.read(buf)) > 0 ) { //read = leer
+                //lectura contiene los byte de la imagen 
+                out.write(buf, 0, lectura); //write = escribir, haciendo copia de la imagen
+            }
+              in.close();
+              out.close();
+        } catch (Exception e) {
+            this.mensaje("FrmArticulo::subirImagenes()-> "+e.getMessage(), "error");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,7 +203,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         cboCategoria = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        txtNomrbe = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         txtPrecioVenta = new javax.swing.JTextField();
         txtStock = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
@@ -143,8 +238,18 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         });
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         tablaListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -180,6 +285,11 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         btnDesactivar.setText("Desactivar");
 
         btnImagen.setText("Imagen");
+        btnImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImagenActionPerformed(evt);
+            }
+        });
 
         btnVer.setText("Ver");
 
@@ -211,7 +321,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                         .addGap(3, 3, 3)
                         .addComponent(cboTotalPorPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
-                        .addComponent(lblTotalRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
+                        .addComponent(lblTotalRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -266,7 +376,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
 
         txtCodigo.setPreferredSize(new java.awt.Dimension(303, 30));
 
-        txtNomrbe.setPreferredSize(new java.awt.Dimension(303, 30));
+        txtNombre.setPreferredSize(new java.awt.Dimension(303, 30));
 
         txtPrecioVenta.setPreferredSize(new java.awt.Dimension(303, 30));
 
@@ -291,12 +401,27 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         jLabel10.setText("Descripcion");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("(*) Indica que es un campo obligatorio");
 
         btnAgregarImagen.setText("Imagen");
+        btnAgregarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarImagenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -316,12 +441,15 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                             .addComponent(jLabel10))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNomrbe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -330,16 +458,13 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(33, 33, 33)
-                                        .addComponent(btnAgregarImagen))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(btnAgregarImagen))))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(247, 247, 247)
                         .addComponent(btnGuardar)
                         .addGap(27, 27, 27)
                         .addComponent(btnCancelar)))
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +482,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNomrbe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -383,7 +508,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -429,6 +554,161 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         this.listar(txtBuscar.getText(), false);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnAgregarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarImagenActionPerformed
+        // TODO add your handling code here:
+        JFileChooser file = new JFileChooser();
+        int estado = file.showOpenDialog(this); //Abriendo ventana del FileChoser
+        if (estado == JFileChooser.APPROVE_OPTION) { //Si el usuario da click en abrir(Open)
+            this.imagen = file.getSelectedFile().getName(); //Obtenemos el nombre del archivo
+            this.rutaOrigen = file.getSelectedFile().getAbsolutePath(); //Obteniendo la ruta absoluta de la imagen o archivo
+            this.rutaDestino = this.DIRECTORIO + this.imagen; //src/file/articulos/nombreImagen.extension
+            
+            ImageIcon im = new ImageIcon(this.rutaOrigen);
+            
+            //lblImagen.getWidth() = Obteniendo el ancho del label
+            //lblImagen.getHeight() = Obteniendo el altodel label
+            //Image.SCALE_DEFAULT = Ajustandose al tamanio del label
+            Icon icono = new ImageIcon(im.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
+            lblImagen.setIcon(icono);
+            lblImagen.repaint();
+        }
+    }//GEN-LAST:event_btnAgregarImagenActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        this.pestaniaFrame("Mantenimiento");
+        this.accion = "guardar";
+        btnGuardar.setText("Guardar");
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (txtNombre.getText().length() == 0 || txtNombre.getText().length() > 100) {
+            this.mensaje("Debes ingresar un nombre y no debe ser mayor a 100 caracteres, es obligatorio", "error");
+            txtNombre.requestFocus();
+            return;
+        }
+        if (txtPrecioVenta.getText().isEmpty()) {
+            this.mensaje("Debes ingresar un precio de venta, es obligatorio", "error");
+            txtPrecioVenta.requestFocus();
+            return;
+        }
+        if (txtStock.getText().length() == 0 ) {
+            this.mensaje("Debes ingresar un stock del articulo, es obligatorio", "error");
+            txtStock.requestFocus();
+            return;
+        }
+        if (txtDescripcion.getText().length() > 255 ) {
+            this.mensaje("Debes ingresar una descripcion menor o igual a 255 caracteres, es obligatorio", "error");
+            txtDescripcion.requestFocus();
+            return;
+        }
+        
+        String resp;
+        if (this.accion.equals("editar")) {
+            //EDITAR
+            String imagenActual = "";
+            if (this.imagen.equals("")) {
+                imagenActual = this.imagenAnt;
+            } else {
+                imagenActual = this.imagen;
+            }
+            Categoria seleccionado = (Categoria) cboCategoria.getSelectedItem(); //Obtener el item seleccionado del combobox 
+            resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()),seleccionado.getId(), txtCodigo.getText(), txtNombre.getText(), nombreAnt, 
+                    Double.parseDouble(txtPrecioVenta.getText()), Integer.parseInt(txtStock.getText()), txtDescripcion.getText(),imagenActual);
+            if (resp.equals("OK")) {
+                if (!this.imagen.equals("")) { //Si el usuario selecciono una imagen 
+                    this.subirImagenes();
+                }
+                this.mensaje("Actualizado correctamente", "correcto");
+                this.limpiar();
+                this.listar("", false);
+                this.pestaniaFrame("Listado");
+            } else {
+                this.mensaje(resp, "error");
+            }
+        } else {
+            //GUARDAR
+            Categoria seleccionado = (Categoria) cboCategoria.getSelectedItem(); //Obtener el item seleccionado del combobox 
+            resp = this.CONTROL.insertar(seleccionado.getId(), txtCodigo.getText(), txtNombre.getText(), Double.parseDouble(txtPrecioVenta.getText()), Integer.parseInt(txtStock.getText()),txtDescripcion.getText(), this.imagen);
+            System.out.println("ID: "+seleccionado.getId());
+            if (resp.equals("OK")) {
+                if (!this.imagen.equals("")) { //Si el usuario selecciono una imagen
+                    this.subirImagenes();
+                }
+                this.mensaje("Registrado correctamente", "correcto");
+                this.limpiar();
+                this.listar("", false);
+            } else {
+                this.mensaje(resp, "error");
+            }
+        }
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.pestaniaFrame("Listado");
+        this.limpiar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImagenActionPerformed
+        // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String ruta = tablaListado.getValueAt(tablaListado.getSelectedRow(), 8).toString(); //Obteniento el nombre de la imagen
+            String path = "\\home\\brayan\\Documentos\\Repositorios\\proyectoBJ\\SistemaFacturacion\\src\\file\\articulos\\";
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    File miArchivo = new File(path+ruta);
+                    Desktop.getDesktop().open(miArchivo); //Abrime el archivo
+                } catch (IOException e) {
+                    this.mensaje("Error al abrir el articulo "+e.getMessage(), "error");
+                }
+            }
+        } else {
+            this.mensaje("Debe seleccionar un articulo", "error");
+        }
+    }//GEN-LAST:event_btnImagenActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = tablaListado.getValueAt(tablaListado.getSelectedRow(), 0).toString();
+            int categoriaId = Integer.parseInt(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1).toString());
+            String categoriaNombre = tablaListado.getValueAt(tablaListado.getSelectedRow(), 2).toString();
+            String codigo = tablaListado.getValueAt(tablaListado.getSelectedRow(), 3).toString();
+            String nombre = tablaListado.getValueAt(tablaListado.getSelectedRow(), 4).toString();
+            nombreAnt = tablaListado.getValueAt(tablaListado.getSelectedRow(), 4).toString();
+            String precioVenta = tablaListado.getValueAt(tablaListado.getSelectedRow(), 5).toString();
+            String stock = tablaListado.getValueAt(tablaListado.getSelectedRow(), 6).toString();
+            String descripcion = tablaListado.getValueAt(tablaListado.getSelectedRow(), 7).toString();
+            this.imagenAnt = tablaListado.getValueAt(tablaListado.getSelectedRow(), 8).toString();
+            
+            txtId.setText(id);
+            //Para poder obtener el nombre de la categoria seleccionada por el usuario y setearla al combobox
+            Categoria seleccionado = new Categoria(categoriaId, categoriaNombre); 
+            cboCategoria.setSelectedItem(seleccionado);//seteando al combobox el nombre de la categoria
+            txtCodigo.setText(codigo);
+            txtNombre.setText(nombre);
+            txtPrecioVenta.setText(precioVenta);
+            txtStock.setText(stock);
+            txtDescripcion.setText(descripcion);
+           
+            
+            //IMPRIMIR LA IMAGEN EN EL LABEL
+            ImageIcon im = new ImageIcon(this.DIRECTORIO + this.imagenAnt);
+            Icon icono = new ImageIcon(im.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_DEFAULT));
+            lblImagen.setIcon(icono);
+            lblImagen.repaint(); //Imprimiendo la imagen
+            
+            this.pestaniaFrame("Mantenimiento");
+            this.accion = "editar";
+            btnGuardar.setText("Editar");
+        } else {
+            this.mensaje("Debes seleccionar un arituclo", "error");
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivar;
@@ -468,7 +748,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtNomrbe;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables

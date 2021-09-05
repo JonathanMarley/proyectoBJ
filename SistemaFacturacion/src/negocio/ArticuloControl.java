@@ -29,6 +29,8 @@ public class ArticuloControl {
     public ArticuloControl() {
         this.DATOSCAT = new CategoriaDAO();
         this.DATOS = new ArticuloDAO();
+        this.obj = new Articulo();
+        this.registrosMostrados = 0;
     }
     
     public DefaultTableModel listar(String texto, int totalPorPagina, int numPagina) {
@@ -68,7 +70,7 @@ public class ArticuloControl {
             }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "CategoriaControl::listar-> " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "ArticuloControl::listar-> " + e.getMessage());
         }
         return this.modeloTabla;
     }
@@ -81,6 +83,84 @@ public class ArticuloControl {
             items.addElement(new Categoria(categoria.getId(), categoria.getNombre()));
         }
         return items;
+    }
+    
+    public String insertar(int categoriaId, String codigo, String nombre, double precioVenta, int stock, String descripcion, String imagen) {
+        try {
+            System.out.println("hola mundo principio " +categoriaId);
+            System.out.println("ENTRANDO"); 
+            if (DATOS.existe(nombre)) {
+                return "El registro ya existe";
+            } else {
+                System.out.println("LLEGANDO AQUI 2");
+                obj.setCategoriaId(categoriaId);
+                System.out.println("hola mundo "+categoriaId);
+                obj.setCodigo(codigo);
+                System.out.println("PASANDO -> setCodigo");
+                obj.setNombre(nombre);
+                System.out.println("PASANDO -> setNombre");
+                obj.setPrecioVenta(precioVenta);
+                System.out.println("PASANDO -> setPrecioVenta");
+                obj.setStock(stock);
+                System.out.println("PASANDO -> setStock");
+                obj.setDespcripcion(descripcion);
+                System.out.println("PASANDO -> setDespcripcion");
+                obj.setImagen(imagen);
+                System.out.println("Despues de obj.setImagen(imagen)");
+                if (DATOS.insertar(obj)) {
+                    System.out.println("Entrando al OK insertar");
+                    return "OK";
+                } else {
+                    return "Error en el registro";
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArticuloControl::insertar-> " + e.getMessage());
+        }
+        return "NULL";
+    }
+
+    public String actualizar(int id, int categoriaId, String codigo, String nombre, String nombreAnt, double precioVenta, int stock, String descripcion, String imagen) {
+        try {
+            if (nombre.equals(nombreAnt)) {
+                obj.setId(id);
+                obj.setCategoriaId(categoriaId);
+                obj.setCodigo(codigo);
+                obj.setNombre(nombre);
+                obj.setPrecioVenta(precioVenta);
+                obj.setStock(stock);
+                obj.setDespcripcion(descripcion);
+                obj.setImagen(imagen);
+
+                if (DATOS.actualizar(obj)) {
+                    return "OK";
+                } else {
+                    return "Error en la actualizacion";
+                }
+            } else {
+                if (DATOS.existe(nombre)) {
+                    return "El registro ya existe";
+                } else {
+                    obj.setId(id);
+                    obj.setCategoriaId(categoriaId);
+                    obj.setCodigo(codigo);
+                    obj.setNombre(nombre);
+                    obj.setPrecioVenta(precioVenta);
+                    obj.setStock(stock);
+                    obj.setDespcripcion(descripcion);
+                    obj.setImagen(imagen);
+
+                    if (DATOS.actualizar(obj)) {
+                        return "OK";
+                    } else {
+                        return "Error en la actualizacion";
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArticuloControl::actualizar-> " + e.getMessage());
+        }
+        return "NULL";
     }
     
     public int total() {

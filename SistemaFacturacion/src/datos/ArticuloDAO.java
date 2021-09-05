@@ -57,12 +57,57 @@ public class ArticuloDAO implements IPaginadoInterface<Articulo> {
 
     @Override
     public boolean insertar(Articulo obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        resp = false;
+        try {
+            System.out.println("LLEGA ANTES DE LA CONSULTA");
+            ps = CON.conectar().prepareStatement("INSERT INTO articulo (categoria_id, codigo, nombre, precio_venta, stock, descripcion, imagen, activo) VALUES (?,?,?,?,?,?,?,1)");
+            ps.setInt(1, obj.getCategoriaId());
+            ps.setString(2, obj.getCodigo());
+            ps.setString(3, obj.getNombre());
+            ps.setDouble(4, obj.getPrecioVenta());
+            ps.setInt(5, obj.getStock());
+            ps.setString(6, obj.getDespcripcion());
+            ps.setString(7, obj.getImagen());
+            System.out.println("LLEGANDO AQUI");
+            if (ps.executeUpdate() > 0) {
+                resp = true;
+                System.out.println("Consulta Ejecutada exitosamente");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ArticuloDAO::insertar-> " + e.getMessage());
+        } finally { 
+            ps = null;
+            CON.desconectar();
+        }
+
+        return resp;
     }
 
     @Override
     public boolean actualizar(Articulo obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        resp = false;
+        try {
+            ps = CON.conectar().prepareStatement("UPDATE articulo SET categoria_id=?, codigo = ?, nombre = ?, precio_venta = ?, stock = ?, descripcion = ?, imagen = ?  WHERE id = ?");
+            ps.setInt(1, obj.getCategoriaId());
+            ps.setString(2, obj.getCodigo());
+            ps.setString(3, obj.getNombre());
+            ps.setDouble(4, obj.getPrecioVenta());
+            ps.setInt(5, obj.getStock());
+            ps.setString(6, obj.getDespcripcion());
+            ps.setString(7, obj.getImagen());
+            ps.setInt(8, obj.getId());
+            if (ps.executeUpdate() > 0) { 
+                resp = true;
+            }
+            ps.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArticuloDAO::actualizar-> " + e.getMessage());
+        } finally {
+            ps = null;
+            CON.desconectar();
+        }
+        return resp;
     }
 
     @Override
@@ -100,7 +145,25 @@ public class ArticuloDAO implements IPaginadoInterface<Articulo> {
 
     @Override
     public boolean existe(String texto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        resp = false;
+        try {
+            ps = CON.conectar().prepareStatement("SELECT nombre FROM articulo WHERE nombre = ?");
+            ps.setString(1, texto);
+            rs = ps.executeQuery();
+            rs.last();
+            if (rs.getRow() > 0) {
+                resp = true;
+            }
+            ps.close();
+            rs.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArticuloDAO::existe-> " + e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return resp;
     }
  
     

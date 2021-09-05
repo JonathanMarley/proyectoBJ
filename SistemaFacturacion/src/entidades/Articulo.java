@@ -52,7 +52,7 @@ public class Articulo {
     public void setCategoriaId(int categoriaId) {
         this.categoriaId = categoriaId;
     }
-
+    
     public String getCategoriaNombre() {
         return categoriaNombre;
     }
@@ -116,4 +116,11 @@ public class Articulo {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    @Override
+    public String toString() {
+        return "Articulo{" + "id=" + id + ", categoriaId=" + categoriaId + ", categoriaNombre=" + categoriaNombre + ", codigo=" + codigo + ", nombre=" + nombre + ", precioVenta=" + precioVenta + ", stock=" + stock + ", despcripcion=" + despcripcion + ", imagen=" + imagen + ", activo=" + activo + '}';
+    }
+    
+    
 }
