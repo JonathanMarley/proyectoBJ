@@ -63,7 +63,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
        cboCategoria.setModel(items);
     }
     
-    private void paginar(){
+        private void paginar(){
         try {
             int totalPaginas;
         
@@ -98,7 +98,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
         tablaListado.setRowSorter(orden);
         this.ocultarColumnas();
-        lblTotalRegistros.setText("Mostrado "+this.CONTROL.totalMostrados()+ "de un total " + this.CONTROL.total() + "registros");
+        lblTotalRegistros.setText(" Mostrado " + this.CONTROL.totalMostrados() + " de un total " + this.CONTROL.total() + "registros");
     }
     
     private void ocultarColumnas(){
@@ -278,9 +278,19 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
 
         btnActivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/cambiar.png"))); // NOI18N
         btnActivar.setText("Activar");
+        btnActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarActionPerformed(evt);
+            }
+        });
 
         btnDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/apagar (1).png"))); // NOI18N
         btnDesactivar.setText("Desactivar");
+        btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarActionPerformed(evt);
+            }
+        });
 
         btnImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/imagen.png"))); // NOI18N
         btnImagen.setText("Imagen");
@@ -290,8 +300,13 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
             }
         });
 
-        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Ver Ingreso.png"))); // NOI18N
+        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/boton.png"))); // NOI18N
         btnVer.setText("Ver");
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
 
         cboNumPagina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,10 +377,10 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                     .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActivar)
                     .addComponent(btnDesactivar)
                     .addComponent(btnImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVer))
+                    .addComponent(btnVer)
+                    .addComponent(btnActivar))
                 .addGap(77, 77, 77))
         );
 
@@ -581,7 +596,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+            // TODO add your handling code here:
        if (txtNombre.getText().length() == 0 || txtNombre.getText().length() > 100) {
             this.mensaje("Debes ingresar un nombre y no debe ser mayor a 100 caracteres, es obligatorio", "error");
             txtNombre.requestFocus();
@@ -709,6 +724,78 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+        // TODO add your handling code here:
+         if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Activo")) {
+              this.mensaje("El registro ya esta activo, no se puede activar de nuevo", "error");
+              return;
+            }else{
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el articulo " + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
+                    String resp = this.CONTROL.activar(Integer.parseInt(id));
+                    this.mensaje(resp, "Activada");
+                } 
+            }
+            
+        }else{
+            this.mensaje("Seleccione 1 registro para activar", "error");
+        }
+    }//GEN-LAST:event_btnActivarActionPerformed
+
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
+        // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Inactivo")) {
+              this.mensaje("El registro ya esta inactivo, no se puede desactivar nuevamente", "error");
+              return;
+            }else{
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el articulo" + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
+                    String resp = this.CONTROL.desactivar(Integer.parseInt(id));
+                    this.mensaje(resp, "Desactivada");
+                } 
+            }
+            
+        }else{
+            this.mensaje("Seleccione 1 registro para desactivar", "error");
+        }
+    }//GEN-LAST:event_btnDesactivarActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        // TODO add your handling code here:
+          if (tablaListado.getSelectedRowCount() == 1) { //ifelse //El usuario si selecciono una fila de la tabla
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            int categoriaId = Integer.parseInt(String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1)));
+            String categoriaNombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
+            String codigo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 4));
+            this.nombreAnt = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 4));
+            String precioVenta = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 5));
+            String stock = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 6));
+            String descripcion = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 7));
+            this.imagenAnt = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 8));
+
+           txtId.setText(id);
+            Categoria seleccionado = new Categoria(categoriaId, categoriaNombre);
+            cboCategoria.setSelectedItem(seleccionado);
+            txtCodigo.setText(codigo);
+            txtNombre.setText(nombre);
+            txtPrecioVenta.setText(precioVenta);
+            txtStock.setText(stock);
+            txtDescripcion.setText(descripcion);
+            btnGuardar.setEnabled(false);
+            //this.pestaniaFrame("Mantenimiento");
+            this.pestaniaFrame("Mantenimiento");
+        } else {
+            this.mensaje("Seleccione 1 registro a editar", "Error");
+        }
+    }//GEN-LAST:event_btnVerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

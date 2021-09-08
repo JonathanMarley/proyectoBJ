@@ -33,7 +33,8 @@ public class ArticuloDao implements IPaginadoInterface<Articulo> {
     public List<Articulo> listar(String texto, int totalPorPagina, int numPagina) {
        List<Articulo>registros = new ArrayList<>();//Metiendo toda la data que viene desde la BD en la lista
         try {
-            ps = CON.conectar().prepareStatement("SELECT A.id, A.categoria_id, C.nombre as categoria_nombre, A.codigo, A.nombre, A.precio_venta, A.stock, A.descripcion, A.imagen, A.activo FROM articulo A INNER JOIN categoria C ON A.categoria_id = C.id WHERE A.nombre LIKE ? ORDER BY A.id ASC LIMIT ?,?");
+            ps = CON.conectar().prepareStatement("SELECT A.id, A.categoria_id, C.nombre as categoria_nombre, A.codigo, A.nombre, A.precio_venta, A.stock, A.descripcion, A.imagen, "
+                    + "A.activo FROM articulo A INNER JOIN categoria C ON A.categoria_id = C.id WHERE A.nombre LIKE ? ORDER BY A.id ASC LIMIT ?,?");
             ps.setString(1,"%" + texto + "%");
             ps.setInt(2, (numPagina - 1) * totalPorPagina);
             ps.setInt(3, totalPorPagina);
@@ -116,15 +117,44 @@ public class ArticuloDao implements IPaginadoInterface<Articulo> {
     }
         return resp;
     }
-
-    @Override
+ @Override
     public boolean desactivar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         resp = false;
+        try {
+        ps = CON.conectar().prepareStatement("UPDATE articulo SET activo=0 WHERE id =?");
+        ps.setInt(1,id);
+        
+            if (ps.executeUpdate() > 0) { // Es ´porque se actualizo correctamente
+                resp = true;
+            }
+            ps.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArtticuloDao::desactivar->" + e.getMessage());
+        }finally{
+        ps = null;
+        CON.desconectar();
+    }
+        return resp;
     }
 
     @Override
     public boolean activar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        resp = false;
+        try {
+        ps = CON.conectar().prepareStatement("UPDATE articulo SET activo=1 WHERE id =?");
+        ps.setInt(1,id);
+        
+            if (ps.executeUpdate() > 0) { // Es ´porque se actualizo correctamente
+                resp = true;
+            }
+            ps.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ArticuloDao::activar->" + e.getMessage());
+        }finally{
+        ps = null;
+        CON.desconectar();
+    }
+        return resp;
     }
 
     @Override

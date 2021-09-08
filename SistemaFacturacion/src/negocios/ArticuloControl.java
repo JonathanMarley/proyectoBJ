@@ -12,6 +12,7 @@ import entidades.Categoria;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -63,14 +64,10 @@ public class ArticuloControl {
             registro[2] = item.getCategoriaNombre();       
             registro[3] = item.getCodigo();       
             registro[4] = item.getNombre();       
-            registro[5] = Double.toString(item.getPrecioVenta());
-            
+            registro[5] = Double.toString(item.getPrecioVenta());            
             registro[6] = Integer.toString(item.getStock());
-      
             registro[7] = item.getDespcricion();
-            
             registro[8] = item.getImagen();
-       
             registro[9] = estado;
             
             
@@ -136,6 +133,7 @@ public class ArticuloControl {
                 obj.setStock(stock);
                 obj.setDespcricion(descripcion);
                 obj.setImagen(imagen);
+                
                 if (DATOS.actualizar(obj)) {
                     return "OK";
                 }else{
@@ -167,7 +165,37 @@ public class ArticuloControl {
         return "NULL";
     }
      
-      public int total(){
+       public String desactivar(int id){
+        try {
+           
+            if (DATOS.desactivar(id)) {
+                return "OK";
+        
+            }else{
+                return "No se puede desactivar el registro";
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "CategoriaDAO::desactivar-> " + e.getMessage());
+        }
+        return "NULL";
+    }
+  
+     public String activar(int id){
+        try {
+           
+            if (DATOS.activar(id)) {
+                return "OK";
+        
+            }else{
+                return "No se puede activar el registro";
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "CategoriaDAO::activar-> " + e.getMessage());
+        }
+        return "NULL";
+    }
+     
+     public int total(){
          return DATOS.total();
      }
      

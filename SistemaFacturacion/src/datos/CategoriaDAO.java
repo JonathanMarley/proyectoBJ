@@ -166,7 +166,7 @@ public class CategoriaDAO implements ISimpleInterface<Categoria> {
     public int total() {
         int totalRegistros = 0;
         try {
-        ps = CON.conectar().prepareStatement("SELEC COUN(id as TOTAQL_REGISTROS FROM categoria");
+        ps = CON.conectar().prepareStatement("SELECT COUNT(id) as TOTAL_REGISTROS FROM categoria");
         rs = ps.executeQuery();
         
             while (rs.next()) {

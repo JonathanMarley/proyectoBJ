@@ -53,10 +53,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        escritorio.setBackground(new java.awt.Color(0, 0, 0));
+        escritorio.setForeground(new java.awt.Color(0, 0, 0));
+
         menuBar.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         menuBar.setPreferredSize(new java.awt.Dimension(181, 45));
 
-        fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Categoria.png"))); // NOI18N
+        fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/almacen.png"))); // NOI18N
         fileMenu.setMnemonic('f');
         fileMenu.setText("Almacen");
         fileMenu.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -87,38 +90,55 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(fileMenu);
 
+        editMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Compra.png"))); // NOI18N
         editMenu.setMnemonic('e');
         editMenu.setText("Ventas");
         editMenu.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         cutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         cutMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/cliente.png"))); // NOI18N
         cutMenuItem.setMnemonic('t');
         cutMenuItem.setText("Clientes");
+        cutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cutMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(cutMenuItem);
 
         copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         copyMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        copyMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/PagoVentas.png"))); // NOI18N
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Ventas");
         editMenu.add(copyMenuItem);
 
         menuBar.add(editMenu);
 
+        helpMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/carro.png"))); // NOI18N
         helpMenu.setMnemonic('h');
         helpMenu.setText("Compras");
         helpMenu.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
+        contentMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/proveedor.png"))); // NOI18N
         contentMenuItem.setMnemonic('c');
         contentMenuItem.setText("Proveedores");
+        contentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contentMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(contentMenuItem);
 
+        aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Ingresos.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("Ingresos");
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(helpMenu);
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/consulta.png"))); // NOI18N
         jMenu1.setText("Consultas");
         jMenu1.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
@@ -132,6 +152,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Acceso 2.png"))); // NOI18N
         jMenu2.setText("Acceso");
         jMenu2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
@@ -145,10 +166,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(jMenu2);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/empleado.png"))); // NOI18N
         jMenu3.setText("Mas Servicios");
         jMenu3.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         menuBar.add(jMenu3);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/flecha.png"))); // NOI18N
         jMenu4.setText("Salir");
         jMenu4.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,11 +187,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 972, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
         );
 
         pack();
@@ -192,6 +215,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+        // TODO add your handling code here:
+        FrmCliente frm = new FrmCliente();
+        escritorio.add(frm);
+        frm.setVisible(true);
+
+    }//GEN-LAST:event_cutMenuItemActionPerformed
+
+    private void contentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contentMenuItemActionPerformed
+        // TODO add your handling code here:
+        FrmProveedor frm = new FrmProveedor();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_contentMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
