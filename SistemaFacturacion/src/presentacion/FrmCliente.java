@@ -502,7 +502,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 this.mensaje(respuesta, "error");
             }
         } else {
-            respuesta = this.CONTROL.insertar(Integer.parseInt(txtId.getText()), "Proveedor", txtNombre.getText(), (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
+            respuesta = this.CONTROL.insertar("Cliente", txtNombre.getText(), (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
             if (respuesta.equals("OK")) {
                 this.mensaje("Registrado Correctamente", "Correcto");
                 this.limpiar();

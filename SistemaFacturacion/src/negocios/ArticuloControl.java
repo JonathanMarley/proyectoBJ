@@ -25,7 +25,6 @@ public class ArticuloControl {
     private final CategoriaDAO DATOSCAT;
     private final ArticuloDao DATOS;
     private Articulo obj;
-    private DefaultTableModel modelTabla;
     private int registrosMostrados;
     private DefaultTableModel modeloTabla;
     
@@ -33,7 +32,6 @@ public class ArticuloControl {
      public ArticuloControl(){
          this.DATOSCAT = new CategoriaDAO();
          this.DATOS = new ArticuloDao();
-         this.registrosMostrados = 0;
          this.obj = new Articulo();
          this.registrosMostrados = 0;
      }
@@ -182,7 +180,6 @@ public class ArticuloControl {
   
      public String activar(int id){
         try {
-           
             if (DATOS.activar(id)) {
                 return "OK";
         

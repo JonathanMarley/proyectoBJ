@@ -581,7 +581,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                  this.mensaje(resp, "error");
              }
          }else{
-             resp = this.CONTROL.insertar(Integer.parseInt(txtId.getText()), "Proveedor", txtNombre.getText(), (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
+             resp = this.CONTROL.insertar("Proveedor", txtNombre.getText(), (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
              if (resp.equals("OK")) {
                  this.mensaje("Registrado Correctamente", "Correcto");
                  this.limpiar();

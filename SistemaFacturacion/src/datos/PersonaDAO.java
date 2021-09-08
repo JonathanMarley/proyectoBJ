@@ -69,12 +69,12 @@ public class PersonaDAO implements IPaginadoInterface<Persona> {
             ps = CON.conectar().prepareStatement("INSERT INTO persona (tipo_persona, nombre, tipo_documento, num_documento, direccion, "
             + "telefono, email, activo) VALUES (?,?,?,?,?,?,?,1)");
             ps.setString(1, obj.getTipoPersona());
-            ps.setString(1, obj.getNombre());
-            ps.setString(1, obj.getTipoDocumento());
-            ps.setString(1, obj.getNumDocumento());
-            ps.setString(1, obj.getDireccion());
-            ps.setString(1, obj.getTelefono());
-            ps.setString(1, obj.getEmail());
+            ps.setString(2, obj.getNombre());
+            ps.setString(3, obj.getTipoDocumento());
+            ps.setString(4, obj.getNumDocumento());
+            ps.setString(5, obj.getDireccion());
+            ps.setString(6, obj.getTelefono());
+            ps.setString(7, obj.getEmail());
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }

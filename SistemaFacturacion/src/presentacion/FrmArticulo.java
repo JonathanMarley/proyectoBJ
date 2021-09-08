@@ -108,10 +108,10 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         tablaListado.getTableHeader().getColumnModel().getColumn(1).setMinWidth(0);//Seteando un ancho minimo al titulo Categoria ID
         
         //OCULTANDO LA CULUMNA IMAGEN   
-        tablaListado.getColumnModel().getColumn(8).setMaxWidth(8);//seteando un ancho maximo
-        tablaListado.getColumnModel().getColumn(8).setMinWidth(8);//seteando un ancho manimo
-        tablaListado.getTableHeader().getColumnModel().getColumn(8).setMaxWidth(8);// Escondiendo el titulo categoria ID
-        tablaListado.getTableHeader().getColumnModel().getColumn(8).setMinWidth(8);//Seteando un ancho minimo al titulo Categoria ID
+        tablaListado.getColumnModel().getColumn(8).setMaxWidth(0);//seteando un ancho maximo
+        tablaListado.getColumnModel().getColumn(8).setMinWidth(0);//seteando un ancho manimo
+        tablaListado.getTableHeader().getColumnModel().getColumn(8).setMaxWidth(0);// Escondiendo el titulo categoria ID
+        tablaListado.getTableHeader().getColumnModel().getColumn(8).setMinWidth(0);//Seteando un ancho minimo al titulo Categoria ID
     }
     
        private void pestaniaFrame(String tipo) {
@@ -738,6 +738,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                 if (JOptionPane.showConfirmDialog(this, "Deseas activar el articulo " + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
                     String resp = this.CONTROL.activar(Integer.parseInt(id));
                     this.mensaje(resp, "Activada");
+                    this.listar("", false);
                 } 
             }
             
@@ -759,6 +760,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
                 if (JOptionPane.showConfirmDialog(this, "Deseas activar el articulo" + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
                     String resp = this.CONTROL.desactivar(Integer.parseInt(id));
                     this.mensaje(resp, "Desactivada");
+                    this.listar("", false);
                 } 
             }
             

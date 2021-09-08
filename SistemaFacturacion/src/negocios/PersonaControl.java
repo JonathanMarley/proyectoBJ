@@ -72,13 +72,12 @@ public class PersonaControl {
         return this.modelTabla;
     }
 
-    public String insertar(int id,String tipoPersona, String nombre, String tipoDocumentos, String numDocumentos, String direccion, String telefono, String email) {
+    public String insertar(String tipoPersona, String nombre, String tipoDocumentos, String numDocumentos, String direccion, String telefono, String email) {
         try {
             if (DATOS.existe(nombre)) {
                 System.out.println("Proveedor");
                 return "El registro ya existe.";
             } else {
-                obj.setId(id);
                 obj.setTipoPersona(tipoPersona);
                 obj.setNombre(nombre);
                 obj.setTipoDocumento(tipoDocumentos);
