@@ -88,6 +88,7 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
         resp = false;
         try {
             ps = CON.conectar().prepareStatement("UPDATE usuario SET rol_id=?, nombre=?, tipo_documento=?, num_documento=?, direccion=?, telefono=?, email=?, clave=? WHERE id=? ");
+            
             ps.setInt(1, obj.getRolId());
             ps.setString(2, obj.getNombreUsuario());
             ps.setString(3, obj.getTipodocumento());
@@ -97,7 +98,6 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
             ps.setString(7, obj.getEmail());
             ps.setString(8, obj.getClave());
             ps.setInt(9, obj.getId());
-            
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }
@@ -178,7 +178,6 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
             if (rs.getRow() > 0) {
                 resp = true;
             }
-            
             ps.close();
             rs.close();
         } catch (Exception e) {

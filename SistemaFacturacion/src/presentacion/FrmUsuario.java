@@ -30,6 +30,8 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
     private void cargarRol() {
         DefaultComboBoxModel items = this.CONTROL.llenarCombobox();
         cboRol.setModel(items);
+        
+        
     }
 
     /**
