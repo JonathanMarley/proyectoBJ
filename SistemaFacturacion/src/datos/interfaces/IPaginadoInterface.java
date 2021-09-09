@@ -9,18 +9,15 @@ import java.util.List;
 
 /**
  *
- * @author brayan
+ * @author Usuario
  */
-
-//ClientesDAO, ProveedoresDAO, UsuariosDAO, ArticulosDAO utilizan esta interface
 public interface IPaginadoInterface<T> {
-    
-    public List<T> listar(String texto, int totalPorPagina, int numPagina);
+    public List<T>listar(String texto, int totalPorPagina, int numPagona);
     public boolean insertar(T obj);
     public boolean actualizar(T obj);
+    //public boolean desactivar(int id);
     public boolean desactivar(int id);
     public boolean activar(int id);
-    public int total();
-    public boolean existe(String texto);
-    
+    public int  total();
+   public boolean existe(String texto); 
 }

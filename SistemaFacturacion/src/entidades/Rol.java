@@ -9,25 +9,23 @@ import java.util.Objects;
 
 /**
  *
- * @author brayan
+ * @author Usuario
  */
-public class Categoria {
-   private int id; 
-   private String nombre;
-   private String descripcion;
-   private boolean activo;
+public class Rol {
+    private int id;
+    private String nombre;
+    private String descripcion;
 
-    public Categoria() {
+    public Rol() {
     }
 
-    public Categoria(int id, String nombre, String descripcion, boolean activo) {
-        this.id = id; //1
-        this.nombre = nombre; //Computacion
-        this.descripcion = descripcion;// ""
-        this.activo = activo;
+    public Rol(int id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
-    public Categoria(int id, String nombre) {
+    public Rol(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -56,26 +54,17 @@ public class Categoria {
         this.descripcion = descripcion;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     @Override
     public String toString() {
-        return nombre;
+        return nombre; //SOLO EL NOMBRE PARA QUE ESO NOS IMPRIMA EN EL COMBOBOX
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + this.id;
-        hash = 23 * hash + Objects.hashCode(this.nombre);
-        hash = 23 * hash + Objects.hashCode(this.descripcion);
-        hash = 23 * hash + (this.activo ? 1 : 0);
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.nombre);
+        hash = 29 * hash + Objects.hashCode(this.descripcion);
         return hash;
     }
 
@@ -90,11 +79,8 @@ public class Categoria {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Categoria other = (Categoria) obj;
+        final Rol other = (Rol) obj;
         if (this.id != other.id) {
-            return false;
-        }
-        if (this.activo != other.activo) {
             return false;
         }
         if (!Objects.equals(this.nombre, other.nombre)) {
@@ -105,5 +91,7 @@ public class Categoria {
         }
         return true;
     }
+    
+    
     
 }
