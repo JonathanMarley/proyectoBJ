@@ -114,7 +114,6 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setResizable(true);
         setTitle("Categoria de productos");
 
         jLabel2.setText("Nombre:");

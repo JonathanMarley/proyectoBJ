@@ -252,6 +252,11 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
 
         btnDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/apagar (1).png"))); // NOI18N
         btnDesactivar.setText("Desactivar");
+        btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarActionPerformed(evt);
+            }
+        });
 
         btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/boton.png"))); // NOI18N
         btnVer.setText("Ver");
@@ -635,6 +640,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             this.pestaniaFrame("Mantenimiento");
             this.accion = "editar";
             btnGuardar.setText("Editar");
+             btnGuardar.setEnabled(false);
         } else {
             this.mensaje("Seleccione 1 registro a editar", "Error");
         }
@@ -646,7 +652,47 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
 
     private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
         // TODO add your handling code here:
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Activo")) {
+              this.mensaje("El registro ya esta activo, no se puede activar de nuevo", "error");
+              return;
+            }else{
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el proveedor " + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
+                    String resp = this.CONTROL.activar(Integer.parseInt(id));
+                    this.mensaje(resp, "Activada");
+                    this.listar("", false);
+               } 
+            }
+            
+        }else{
+            this.mensaje("Seleccione 1 registro para activar", "error");
+        }
     }//GEN-LAST:event_btnActivarActionPerformed
+
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
+        // TODO add your handling code here:
+          if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Inactivo")) {
+              this.mensaje("El registro ya esta inactivo, no se puede desactivar nuevamente", "error");
+              return;
+            }else{
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el proveedor" + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
+                    String resp = this.CONTROL.desactivar(Integer.parseInt(id));
+                    this.mensaje(resp, "Desactivada");
+                    this.listar("",false);
+                } 
+            }
+            
+        }else{
+            this.mensaje("Seleccione 1 registro para desactivar", "error");
+        }
+    }//GEN-LAST:event_btnDesactivarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

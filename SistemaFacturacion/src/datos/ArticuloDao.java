@@ -49,7 +49,7 @@ public class ArticuloDao implements IPaginadoInterface<Articulo> {
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ArticuloDAO::listar->" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "ArticuloDao::listar->" + e.getMessage());
 
         } finally {
 

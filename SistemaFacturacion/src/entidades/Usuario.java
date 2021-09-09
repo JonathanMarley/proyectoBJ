@@ -13,6 +13,7 @@ public class Usuario {
     private int id;
     private int rolId;
     private String nombre;
+    private String nombreUsuario;
     private String tipodocumento;
     private String numDocumento;
     private String direccion;
@@ -24,10 +25,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int id, int rolId, String nombre, String tipodocumento, String numDocumento, String direccion, String telefono, String email, String clave, boolean activo) {
+    public Usuario(int id, int rolId, String nombre, String nombreUsuario, String tipodocumento, String numDocumento, String direccion, String telefono, String email, String clave, boolean activo) {
         this.id = id;
         this.rolId = rolId;
         this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
         this.tipodocumento = tipodocumento;
         this.numDocumento = numDocumento;
         this.direccion = direccion;
@@ -59,6 +61,14 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getTipodocumento() {
@@ -116,5 +126,7 @@ public class Usuario {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    
     
 }

@@ -143,10 +143,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         jMenuItem1.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/ConsultarCompras.png"))); // NOI18N
         jMenuItem1.setText("Consulta Compras");
         jMenu1.add(jMenuItem1);
 
         jMenuItem4.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/ConsultarVentas.png"))); // NOI18N
         jMenuItem4.setText("Consulta Ventas");
         jMenu1.add(jMenuItem4);
 
@@ -157,11 +159,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         jMenuItem2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Roles.png"))); // NOI18N
         jMenuItem2.setText("Roles");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Acceso.png"))); // NOI18N
         jMenuItem3.setText("Usuarios");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         menuBar.add(jMenu2);
@@ -230,6 +244,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_contentMenuItemActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        FrmRol frm = new FrmRol();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        FrmUsuario frm = new FrmUsuario();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

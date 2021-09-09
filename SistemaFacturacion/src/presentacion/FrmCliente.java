@@ -444,6 +444,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 if (JOptionPane.showConfirmDialog(this, "Deseas activar el cliente" + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
                     String resp = this.CONTROL.desactivar(Integer.parseInt(id));
                     this.mensaje(resp, "Desactivada");
+                    this.listar("",false);
                 } 
             }
             
@@ -538,7 +539,8 @@ public class FrmCliente extends javax.swing.JInternalFrame {
                 if (JOptionPane.showConfirmDialog(this, "Deseas activar el cliente " + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
                     String resp = this.CONTROL.activar(Integer.parseInt(id));
                     this.mensaje(resp, "Activada");
-                } 
+                    this.listar("", false);
+               } 
             }
             
         }else{
@@ -564,7 +566,7 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             txtDireccion.setText(direccion);
             txtTelefono.setText(telefono);
             txtEmail.setText(email);
-
+             btnGuardar.setEnabled(false);
             this.pestaniaFrame("Mantenimiento");
         } else {
             this.mensaje("Seleccione 1 registro a editar", "Error");
