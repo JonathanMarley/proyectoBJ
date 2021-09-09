@@ -21,10 +21,10 @@ public class Categoria {
     }
 
     public Categoria(int id, String nombre, String descripcion, boolean activo) {
-        this.id = id; //1
-        this.nombre = nombre; //Computacion
-        this.descripcion = descripcion;// ""
-        this.activo = activo;
+        this.id = id; 
+        this.nombre = nombre; 
+        this.descripcion = descripcion; 
+        this.activo = activo; 
     }
 
     public Categoria(int id, String nombre) {
@@ -41,7 +41,7 @@ public class Categoria {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombre; //Computacion
     }
 
     public void setNombre(String nombre) {
@@ -57,9 +57,10 @@ public class Categoria {
     }
 
     public boolean isActivo() {
-        return activo;
+        return activo; 
     }
 
+   
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
@@ -71,11 +72,11 @@ public class Categoria {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + this.id;
-        hash = 23 * hash + Objects.hashCode(this.nombre);
-        hash = 23 * hash + Objects.hashCode(this.descripcion);
-        hash = 23 * hash + (this.activo ? 1 : 0);
+        int hash = 7;
+        hash = 37 * hash + this.id;
+        hash = 37 * hash + Objects.hashCode(this.nombre);
+        hash = 37 * hash + Objects.hashCode(this.descripcion);
+        hash = 37 * hash + (this.activo ? 1 : 0);
         return hash;
     }
 
