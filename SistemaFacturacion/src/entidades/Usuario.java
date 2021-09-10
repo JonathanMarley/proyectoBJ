@@ -24,6 +24,20 @@ public class Usuario {
 
     public Usuario() {
     }
+    
+    //CONSTRUCTOR PARA EL LOGIN
+    public Usuario(int id, int rolId, String nombre, String nombreUsuario, String tipodocumento, String numDocumento, String direccion, String telefono, String email, boolean activo) {
+        this.id = id;
+        this.rolId = rolId;
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.tipodocumento = tipodocumento;
+        this.numDocumento = numDocumento;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.activo = activo;
+    }
 
     public Usuario(int id, int rolId, String nombre, String nombreUsuario, String tipodocumento, String numDocumento, String direccion, String telefono, String email, String clave, boolean activo) {
         this.id = id;

@@ -41,7 +41,7 @@ public class ArticuloControl {
             
             List<Articulo> lista = new ArrayList<>();
              System.out.println("mundo");
-            lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina));
+            lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina, ""));
             System.out.println("paso");
         
         String[] titulos = {"Id", "Categoria ID", "Categoria", "Codigo", "Nombre", "Precio Venta", "Sotck", "Descripcion", "Imagen", "Estado"}; //Titulos de la tabla

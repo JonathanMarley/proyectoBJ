@@ -5,17 +5,27 @@
  */
 package presentacion;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import negocios.UsuarioControl;
+
 /**
  *
  * @author 10bra
  */
 public class FrmLogin extends javax.swing.JFrame {
 
+    private static final String EMAIL_PATTERN
+            = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
     /**
      * Creates new form FrmLogin
      */
     public FrmLogin() {
         initComponents();
+        this.setLocationRelativeTo(null); //Centramos la ventana del Login
+        setIconImage(new ImageIcon(getClass().getResource("imagenes/ordenador-personal.png/")).getImage());
     }
 
     /**
@@ -48,6 +58,11 @@ public class FrmLogin extends javax.swing.JFrame {
 
         btnIngresar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -98,6 +113,34 @@ public class FrmLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        String email = txtEmail.getText();
+        if (!email.matches(EMAIL_PATTERN) || email.length() > 50) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar un email valido, y este no debe superar los 50 caracteres", "ProyectoBJ", JOptionPane.WARNING_MESSAGE);
+            txtEmail.requestFocus();
+            return;
+        }
+        if (txtPassword.getText().length() == 0 || txtPassword.getText().length() > 64) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar una clave de acceso, y este no debe superar los 64 caracteres", "ProyectoBJ", JOptionPane.WARNING_MESSAGE);
+            txtPassword.requestFocus();
+            return;
+        }
+        
+        UsuarioControl control = new UsuarioControl();
+        String respuesta = control.login(email,txtPassword.getText());
+        if (respuesta.equals("1")) { //Se logeo correctamente
+            this.dispose(); //Cerramos el frame actual
+            FrmPrincipal frm = new FrmPrincipal();
+            frm.toFront(); //Posicionarlo enfrente o que aparezca
+            frm.setVisible(true); 
+        } else if(respuesta.equals("2")) {
+            JOptionPane.showMessageDialog(this, "Usuario no tiene acceso.", "ProyectoBJ", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Los datos de acceso son incorrectos", "ProyectoBJ", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments

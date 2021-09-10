@@ -59,9 +59,9 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             this.numPagina = Integer.parseInt((String) cboNumPagina.getSelectedItem());
         }
         if (paginar) {
-            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPorPagina, this.numPagina));
+            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPorPagina, this.numPagina, ""));
         } else {
-            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPorPagina, 1));
+            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPorPagina, 1, ""));
         }
         //tablaListado.setModel(this.CONTROL.listar(texto));
         TableRowSorter orden = new TableRowSorter(tablaListado.getModel());

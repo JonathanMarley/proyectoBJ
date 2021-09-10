@@ -5,20 +5,16 @@
  */
 package presentacion;
 
-
-
-
-
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocios.PersonaControl;
 
 /**
  *
- * @author Usuario
+ * @author 10bra
  */
-public class FrmProveedor extends javax.swing.JInternalFrame {
-    
+public class FrmSeleccionarProveedorC extends javax.swing.JDialog {
+
     private final PersonaControl CONTROL;
     private String accion;
     private String nombreAnt;
@@ -28,24 +24,30 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     private int numPagina = 1;
     private  boolean primeracargar = true;
     private int totalRegistros;
-
+    private FrmIngreso vista; //NUEVO PARA VENTANA MODAL**
+    
     /**
-     * Creates new form FrmProveedor
+     * Creates new form FrmSeleccionarProveedorC
      */
-    public FrmProveedor() {
+    public FrmSeleccionarProveedorC(java.awt.Frame parent, FrmIngreso frm ,boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null); //Centramos la ventana modal
+        this.vista = frm;
+        this.setTitle("Seleccione un proveedor para el ingreso al almacen");
+
         this.CONTROL = new PersonaControl();
         this.paginar();
         this.listar("", false);
         tabGeneral.setEnabledAt(1,false);
         this.accion = "guardar";
         txtId.setVisible(false);
-        //lblAviso.setVisible(false);
-        
-        
+
+        this.setVisible(true);
     }
+
     
-        private void paginar(){
+     private void paginar(){
         try {
             
             int totalPaginas;
@@ -126,7 +128,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
    private static final String EMAIL_PATTERN    
           = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
           + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -153,6 +154,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         btnActivar = new javax.swing.JButton();
         btnDesactivar = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -168,14 +170,10 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtId = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         jLabel1.setText("Nombre:");
@@ -266,24 +264,28 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Seleccionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDesactivar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(482, 482, 482))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
@@ -294,16 +296,22 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cboTotalPorPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblTotalRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTotalRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(btnDesactivar)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(482, 482, 482)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +322,8 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -329,7 +338,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                     .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(366, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Listado", jPanel1);
@@ -376,17 +385,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 284, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 65, Short.MAX_VALUE)
-        );
-
         jLabel12.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel12.setText("(*) Indica que es un campo obligatorio.");
 
@@ -408,17 +406,13 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(185, 185, 185)
+                        .addGap(199, 199, 199)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(btnGuardar)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(btnCancelar))))))
+                                .addComponent(btnGuardar)
+                                .addGap(28, 28, 28)
+                                .addComponent(btnCancelar))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,7 +434,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                                 .addGap(34, 34, 34)
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addContainerGap(407, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,9 +471,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(211, 211, 211)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addGap(270, 270, 270))
         );
 
         tabGeneral.addTab("Mantenimiento", jPanel4);
@@ -498,23 +490,25 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-         this.listar(txtBuscar.getText(), false);
+        this.listar(txtBuscar.getText(), false);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         this.pestaniaFrame("Manteminento");
-         this.accion = "Guardar";
-         btnGuardar.setText("Guardar");
+        this.accion = "Guardar";
+        btnGuardar.setText("Guardar");
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        this.pestaniaFrame("Listado");
-        this.limpiar();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void cboNumPaginasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNumPaginasActionPerformed
         // TODO add your handling code here:
@@ -527,95 +521,49 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         this.paginar();
     }//GEN-LAST:event_cboTotalPorPaginaActionPerformed
 
-    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarActionPerformed
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Activo")) {
+                this.mensaje("El registro ya esta activo, no se puede activar de nuevo", "error");
+                return;
+            }else{
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el proveedor " + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
+                    String resp = this.CONTROL.activar(Integer.parseInt(id));
+                    this.mensaje(resp, "Activada");
+                    this.listar("", false);
+                }
+            }
 
-    private void cboTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoDocumentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboTipoDocumentoActionPerformed
+        }else{
+            this.mensaje("Seleccione 1 registro para activar", "error");
+        }
+    }//GEN-LAST:event_btnActivarActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
         // TODO add your handling code here:
-        String email = txtEmail.getText();
-        if (txtNombre.getText().length() == 0 || txtNombre.getText().length() > 70) {
-            this.mensaje("Debes ingresar un nombre y no debe ser mayor a 100 caracteres, es obligatorio", "error");
-            txtNombre.requestFocus();
-            return; 
-        }
-         if (txtNumDocumento.getText().length() > 20) {
-            this.mensaje("Debes ingresar un numero de documento y no debe ser mayor a 50 caracteres, es obligatorio", "error");
-            txtNumDocumento.requestFocus();
-            return;
-        }
-         if (txtTelefono.getText().length() > 20) {
-            this.mensaje("Debes ingresar un numero telefonico y no debe ser mayor a 20 caracteres es, obligatorio", "error");
-            txtTelefono.requestFocus();
-            return;
-        }
-         
-         if (txtDireccion.getText().length() > 15) {
-            this.mensaje("Debes ingresar una direccion y no debe ser mayor a 100 caracteres, es obligatorio", "error");
-            txtDireccion.requestFocus();
-         }
-         if (!email.equals("")) {
-             if (!email.matches(EMAIL_PATTERN) || txtEmail.getText().length() > 70) {
-                 this.mensaje("Debes ingresar un correo electronico y no debe ser mayor a 75 caracteres, es obligatorio", "error");
-            txtEmail.requestFocus();
-            return;
-             }
-            
-        }
-         
-         
-         String resp;
-         if (this.accion.equals("editar")) {
-             //EDITAR
-             //Categoria seleccionado = (Categoria) cboCategoria.getSelectedItem();
-            //resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), "Proveedor", txtNombre.getText(), nombreAnt,  (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
-               resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), "Proveedor",txtNombre.getText(), nombreAnt, (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
-            if (resp.equals("OK")) {
-                 this.mensaje("Actualizar correctamente ", "Correcto");
-                 this.limpiar();
-                 this.listar("", false);
-                 tabGeneral.setSelectedIndex(1);//Lleva a la pestaña de mantenimineto
-                 tabGeneral.setEnabledAt(0,true);//Pestaña Mantenimiento activa
-                 tabGeneral.setEnabledAt(1,false);//Pestaña listado desactivada
-                 this.pestaniaFrame("Listado");
-             }else{
-                 this.mensaje(resp, "error");
-             }
-         }else{
-             resp = this.CONTROL.insertar("Proveedor", txtNombre.getText(), (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
-             if (resp.equals("OK")) {
-                 this.mensaje("Registrado Correctamente", "Correcto");
-                 this.limpiar();
-                 this.listar("", false);
-             }else{
-                 this.mensaje(resp, "error");
-             }
-                  
-         }
-         
-         
-         
-         
-    }//GEN-LAST:event_btnGuardarActionPerformed
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+            if (activo.equals("Inactivo")) {
+                this.mensaje("El registro ya esta inactivo, no se puede desactivar nuevamente", "error");
+                return;
+            }else{
+                if (JOptionPane.showConfirmDialog(this, "Deseas activar el proveedor" + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
+                    String resp = this.CONTROL.desactivar(Integer.parseInt(id));
+                    this.mensaje(resp, "Desactivada");
+                    this.listar("",false);
+                }
+            }
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
-
-    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
-        // TODO add your handling code here:
-        
-        
-//        if (vericacion_email(txtEmail.getText())) {
-//            lblAviso.setVisible(false);
-//        }else{
-//            lblAviso.setVisible(true);
-//        }
-    }//GEN-LAST:event_txtEmailKeyReleased
+        }else{
+            this.mensaje("Seleccione 1 registro para desactivar", "error");
+        }
+    }//GEN-LAST:event_btnDesactivarActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         // TODO add your handling code here:
@@ -640,60 +588,107 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
             this.pestaniaFrame("Mantenimiento");
             this.accion = "editar";
             btnGuardar.setText("Editar");
-             btnGuardar.setEnabled(false);
+            btnGuardar.setEnabled(false);
         } else {
             this.mensaje("Seleccione 1 registro a editar", "Error");
         }
     }//GEN-LAST:event_btnVerActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    private void cboTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoDocumentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    }//GEN-LAST:event_cboTipoDocumentoActionPerformed
 
-    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (tablaListado.getSelectedRowCount() == 1) {
-            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
-            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
-            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
-            if (activo.equals("Activo")) {
-              this.mensaje("El registro ya esta activo, no se puede activar de nuevo", "error");
-              return;
-            }else{
-                if (JOptionPane.showConfirmDialog(this, "Deseas activar el proveedor " + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
-                    String resp = this.CONTROL.activar(Integer.parseInt(id));
-                    this.mensaje(resp, "Activada");
-                    this.listar("", false);
-               } 
-            }
-            
-        }else{
-            this.mensaje("Seleccione 1 registro para activar", "error");
+        String email = txtEmail.getText();
+        if (txtNombre.getText().length() == 0 || txtNombre.getText().length() > 70) {
+            this.mensaje("Debes ingresar un nombre y no debe ser mayor a 100 caracteres, es obligatorio", "error");
+            txtNombre.requestFocus();
+            return;
         }
-    }//GEN-LAST:event_btnActivarActionPerformed
-
-    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
-        // TODO add your handling code here:
-          if (tablaListado.getSelectedRowCount() == 1) {
-            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
-            String activo = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
-            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
-            if (activo.equals("Inactivo")) {
-              this.mensaje("El registro ya esta inactivo, no se puede desactivar nuevamente", "error");
-              return;
-            }else{
-                if (JOptionPane.showConfirmDialog(this, "Deseas activar el proveedor" + nombre + " ?", "ProyectoBJ", JOptionPane.YES_NO_OPTION )== 0) {
-                    String resp = this.CONTROL.desactivar(Integer.parseInt(id));
-                    this.mensaje(resp, "Desactivada");
-                    this.listar("",false);
-                } 
-            }
-            
-        }else{
-            this.mensaje("Seleccione 1 registro para desactivar", "error");
+        if (txtNumDocumento.getText().length() > 20) {
+            this.mensaje("Debes ingresar un numero de documento y no debe ser mayor a 50 caracteres, es obligatorio", "error");
+            txtNumDocumento.requestFocus();
+            return;
         }
-    }//GEN-LAST:event_btnDesactivarActionPerformed
+        if (txtTelefono.getText().length() > 20) {
+            this.mensaje("Debes ingresar un numero telefonico y no debe ser mayor a 20 caracteres es, obligatorio", "error");
+            txtTelefono.requestFocus();
+            return;
+        }
 
+        if (txtDireccion.getText().length() > 15) {
+            this.mensaje("Debes ingresar una direccion y no debe ser mayor a 100 caracteres, es obligatorio", "error");
+            txtDireccion.requestFocus();
+        }
+        if (!email.equals("")) {
+            if (!email.matches(EMAIL_PATTERN) || txtEmail.getText().length() > 70) {
+                this.mensaje("Debes ingresar un correo electronico y no debe ser mayor a 75 caracteres, es obligatorio", "error");
+                txtEmail.requestFocus();
+                return;
+            }
+
+        }
+
+        String resp;
+        if (this.accion.equals("editar")) {
+            //EDITAR
+            //Categoria seleccionado = (Categoria) cboCategoria.getSelectedItem();
+            //resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), "Proveedor", txtNombre.getText(), nombreAnt,  (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
+            resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), "Proveedor",txtNombre.getText(), nombreAnt, (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(), txtEmail.getText());
+            if (resp.equals("OK")) {
+                this.mensaje("Actualizar correctamente ", "Correcto");
+                this.limpiar();
+                this.listar("", false);
+                tabGeneral.setSelectedIndex(1);//Lleva a la pestaña de mantenimineto
+                tabGeneral.setEnabledAt(0,true);//Pestaña Mantenimiento activa
+                tabGeneral.setEnabledAt(1,false);//Pestaña listado desactivada
+                this.pestaniaFrame("Listado");
+            }else{
+                this.mensaje(resp, "error");
+            }
+        }else{
+            resp = this.CONTROL.insertar("Proveedor", txtNombre.getText(), (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
+            if (resp.equals("OK")) {
+                this.mensaje("Registrado Correctamente", "Correcto");
+                this.limpiar();
+                this.listar("", false);
+            }else{
+                this.mensaje(resp, "error");
+            }
+
+        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.pestaniaFrame("Listado");
+        this.limpiar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        // TODO add your handling code here:
+
+        //        if (vericacion_email(txtEmail.getText())) {
+            //            lblAviso.setVisible(false);
+            //        }else{
+            //            lblAviso.setVisible(true);
+            //        }
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivar;
@@ -707,6 +702,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cboNumPaginas;
     private javax.swing.JComboBox<String> cboTipoDocumento;
     private javax.swing.JComboBox<String> cboTotalPorPagina;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -718,7 +714,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTotalRegistros;

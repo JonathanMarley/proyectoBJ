@@ -54,7 +54,7 @@ public class UsuarioControl {
     public DefaultTableModel listar(String texto, int totalPorPagina, int numPagina) {
         try {
             List<Usuario> lista = new ArrayList();
-            lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina));
+            lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina,""));
 
             String[] titulos = {"Id", "Rol ID", "Usuario", "DOcumento", "Num Documento", "Direccion", "Telefono", "Email", "Clave", "Estado"};
             this.modeloTabla = new DefaultTableModel(null, titulos);
@@ -138,6 +138,32 @@ public class UsuarioControl {
             JOptionPane.showMessageDialog(null, "UsuarioControl::insertar-> " + e.getMessage());
         }
         return "";
+    }
+    
+    public String login(String email, String clave) {
+        try {
+            String respuesta = "0";
+            
+            Usuario usu = this.DATOS.login(email, this.encriptar(clave));
+            if (usu != null) { //Es porque no viene vacio, es porque hay un usuario
+                if (usu.isActivo()) { //Si el usuario que se intenta logear esta activo
+                    Variables.USUARIO_ID = usu.getId();
+                    Variables.ROL_ID = usu.getRolId();
+                    Variables.ROL_NOMBRE = usu.getNombre();
+                    Variables.USUARIO_NOMBRE = usu.getNombreUsuario();
+                    Variables.USUARIO_EMAIL = usu.getEmail();
+                   respuesta =  "1";
+                } else {
+                    respuesta = "2";
+                }
+            }
+            
+            return respuesta;
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "UsuarioControl::login-> " + e.getMessage());
+        }
+        return "NULL";
     }
 
     public String actualizar(int id, int rolId, String nombre, String tipoDocumento, String numDocumento, String direccion, String telefono, String email, String emailAnt, String clave) {

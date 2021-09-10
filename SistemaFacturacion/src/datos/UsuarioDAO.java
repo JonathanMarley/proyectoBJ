@@ -31,7 +31,7 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
     }
 
     @Override
-    public List<Usuario> listar(String texto, int totalPorPagina, int numPagina) {
+    public List<Usuario> listar(String texto, int totalPorPagina, int numPagina, String persona) {
         List<Usuario> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("SELECT u.id, u.rol_id,  u.nombre, u.tipo_documento, u.num_documento, u.direccion, u.telefono, u.email, u.clave, u.activo FROM usuario  WHERE u.nombre LIKE ? ORDER BY u.id ASC LIMIT ?,?");
@@ -54,7 +54,32 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
             CON.desconectar();
         }
         return registros;
-
+    }
+    
+    public Usuario login(String email, String clave) {
+        Usuario usu = null;
+        
+        try {
+            ps = CON.conectar().prepareStatement("SELECT u.id, u.rol_id, r.nombre as rol_nombre, u.nombre, u.tipo_documento, u.num_documento, u.direccion, "
+                    + "u.telefono, u.email, u.activo FROM usuario u INNER JOIN rol r ON u.rol_id = r.id WHERE u.email = ? AND clave = ?");
+            ps.setString(1, email);
+            ps.setString(2, clave);
+            rs = ps.executeQuery();
+            
+            if (rs.first()) {
+                usu = new Usuario(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getBoolean(10));
+            }
+            
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "UsuarioDAO::login->" + e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return usu;
     }
 
     @Override

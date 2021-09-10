@@ -32,10 +32,10 @@ public class PersonaControl {
         this.registroMostrados = 0;
     }
 
-    public DefaultTableModel listar(String texto, int totalPorPagina, int numPagina) {
+    public DefaultTableModel listar(String texto, int totalPorPagina, int numPagina, String tipoPersona) {
         try {
             List<Persona> lista = new ArrayList();
-            lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina));
+            lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina, tipoPersona));
 
             String[] titulos = {"Id", "Tipo_Persona", "Nombre", "Documento", "N°Dcumento", "Direccion", "Telefono", "Email", "Estado"};
             this.modelTabla = new DefaultTableModel(null, titulos);
