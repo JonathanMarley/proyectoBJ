@@ -3,18 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/entidades/Persona.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmProveedor.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/ArticuloControl.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/CategoriaDAO.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmPrincipal.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmArticulo.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/ArticuloDao.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/PersonaDAO.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/CategoriaControl.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/PersonaControl.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmCliente.java</file>
-            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmCategoria.java</file>
+            <file>file:/C:/Users/10bra/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmPrincipal.java</file>
+            <file>file:/C:/Users/10bra/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/Variables.java</file>
+            <file>file:/C:/Users/10bra/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/UsuarioControl.java</file>
+            <file>file:/C:/Users/10bra/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmLogin.java</file>
+            <file>file:/C:/Users/10bra/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/entidades/Usuario.java</file>
+            <file>file:/C:/Users/10bra/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/UsuarioDAO.java</file>
         </group>
     </open-files>
 </project-private>

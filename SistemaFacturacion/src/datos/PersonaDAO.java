@@ -31,18 +31,17 @@ public class PersonaDAO implements IPaginadoInterface<Persona> {
     }
 
     @Override
-    public List<Persona> listar(String texto, int totalPorPagina, int numPaginas) {
+    public List<Persona> listar(String texto, int totalPorPagina, int numPaginas, String tipoPersona) {
         List<Persona> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("SELECT P.id, P.tipo_persona, P.nombre, P.tipo_documento, P.num_documento, "
-             + "P.direccion, P.telefono, P.email, P.activo FROM persona P  WHERE P.nombre LIKE ?  ORDER BY P.id ASC LIMIT ?,?"); 
+             + "P.direccion, P.telefono, P.email, P.activo FROM persona P  WHERE P.nombre LIKE ? AND p.tipo_persona LIKE ? ORDER BY P.id ASC LIMIT ?,?"); 
             ps.setString(1, "%" + texto + "%");
+            ps.setString(2, "%" + tipoPersona + "%");
+            ps.setInt(3,(numPaginas - 1) * totalPorPagina);
+            ps.setInt(4, totalPorPagina);
             
-            ps.setInt(2,(numPaginas - 1) * totalPorPagina);
-            ps.setInt(3, totalPorPagina);
-           
-            rs = ps.executeQuery();
-            
+            rs = ps.executeQuery();            
             while (rs.next()) {
                 registros.add(new Persona(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9)));
             }
@@ -57,11 +56,8 @@ public class PersonaDAO implements IPaginadoInterface<Persona> {
             CON.desconectar();
         }
         return registros;
-    }
-    
-
-    
-    
+    } 
+   
     
 
     @Override

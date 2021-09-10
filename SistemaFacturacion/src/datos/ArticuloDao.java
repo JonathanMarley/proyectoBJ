@@ -31,7 +31,7 @@ public class ArticuloDao implements IPaginadoInterface<Articulo> {
     }
 
     @Override
-    public List<Articulo> listar(String texto, int totalPorPagina, int numPagina) {
+    public List<Articulo> listar(String texto, int totalPorPagina, int numPagina, String tipoPersona) {
         List<Articulo> registros = new ArrayList<>();//Metiendo toda la data que viene desde la BD en la lista
         try {
             ps = CON.conectar().prepareStatement("SELECT A.id, A.categoria_id, C.nombre as categoria_nombre, A.codigo, A.nombre, A.precio_venta, A.stock, A.descripcion, A.imagen, "

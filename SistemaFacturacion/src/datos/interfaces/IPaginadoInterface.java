@@ -12,7 +12,7 @@ import java.util.List;
  * @author Usuario
  */
 public interface IPaginadoInterface<T> {
-    public List<T>listar(String texto, int totalPorPagina, int numPagona);
+    public List<T>listar(String texto, int totalPorPagina, int numPagona, String tipoPersona);
     public boolean insertar(T obj);
     public boolean actualizar(T obj);
     //public boolean desactivar(int id);

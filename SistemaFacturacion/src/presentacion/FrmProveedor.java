@@ -74,9 +74,9 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
              this.numPagina = Integer.parseInt((String) cboNumPaginas.getSelectedItem());
          }
          if (paginar) {
-             tablaListado.setModel(this.CONTROL.listar(texto,this.totalPorPagina, this.numPagina));
+             tablaListado.setModel(this.CONTROL.listar(texto,this.totalPorPagina, this.numPagina, "Proveedor"));
          }else{
-             tablaListado.setModel(this.CONTROL.listar(texto,this.totalPorPagina, 1));
+             tablaListado.setModel(this.CONTROL.listar(texto,this.totalPorPagina, 1, "Proveedor"));
          }
          TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
          tablaListado.setRowSorter(orden);
@@ -330,7 +330,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                     .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActivar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(405, Short.MAX_VALUE))
+                .addContainerGap(366, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Listado", jPanel1);
@@ -480,7 +480,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(211, 211, 211)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(278, 278, 278))
+                .addGap(43, 43, 43))
         );
 
         tabGeneral.addTab("Mantenimiento", jPanel4);

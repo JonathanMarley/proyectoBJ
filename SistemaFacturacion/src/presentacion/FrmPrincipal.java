@@ -25,6 +25,39 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("imagenes/ordenador-personal.png/")).getImage());
         this.cargarOpcionesMenu();
     }
+    
+    //Otorgar permisos segun el rol
+    private void cargarOpcionesMenu() {
+        if (negocios.Variables.ROL_NOMBRE.equals("Administrador")) {
+            mnuAlmacen.setEnabled(true);
+            mnuCompras.setEnabled(true);
+            mnuVentas.setEnabled(true);
+            mnuAcceso.setEnabled(true);
+            itemConsultaCompras.setEnabled(true);
+            itemConsultaVentas.setEnabled(true);
+        } else if(negocios.Variables.ROL_NOMBRE.equals("Almacenero")){
+            mnuAlmacen.setEnabled(true);
+            mnuCompras.setEnabled(true);
+            mnuVentas.setEnabled(false);
+            mnuAcceso.setEnabled(false);
+            itemConsultaCompras.setEnabled(true);
+            itemConsultaVentas.setEnabled(false);
+        }else if(negocios.Variables.ROL_NOMBRE.equals("Vendedor")){
+            mnuAlmacen.setEnabled(true);
+            mnuCompras.setEnabled(false);
+            mnuVentas.setEnabled(true);
+            mnuAcceso.setEnabled(false);
+            itemConsultaCompras.setEnabled(false);
+            itemConsultaVentas.setEnabled(true);
+        } else {
+            mnuAlmacen.setEnabled(false);
+            mnuCompras.setEnabled(false);
+            mnuVentas.setEnabled(false);
+            mnuAcceso.setEnabled(false);
+            itemConsultaCompras.setEnabled(false);
+            itemConsultaVentas.setEnabled(false);
+        }
+    }
 
     //Otorgar permiso segun el rol
     private void cargarOpcionesMenu() {
@@ -93,7 +126,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        escritorio.setBackground(new java.awt.Color(0, 0, 0));
         escritorio.setForeground(new java.awt.Color(0, 0, 0));
 
         menuBar.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -250,6 +282,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenu4MouseClicked(evt);
+            }
+        });
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
             }
         });
         menuBar.add(jMenu4);

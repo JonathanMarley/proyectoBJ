@@ -13,14 +13,13 @@ import javax.swing.JFrame;
  */
 public class FrmIngreso extends javax.swing.JInternalFrame {
     public JFrame contenedor; //PARA LA VENTANA MODAL
-
+    
     /**
      * Creates new form FrmIngreso
      */
     public FrmIngreso(JFrame frmP) {
         initComponents();
-        this.contenedor = frmP; //PARA LA VENTNA MODAL
-        
+        this.contenedor = frmP; //PARA LA VENTANA MODAL
     }
 
     /**

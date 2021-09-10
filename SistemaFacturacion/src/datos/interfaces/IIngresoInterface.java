@@ -9,13 +9,15 @@ import java.util.List;
 
 /**
  *
- * @author Usuario
+ * @author 10bra
  */
 public interface IIngresoInterface<T, D> {
-    public List<T> listar(String texto, int totalPorPagina, int numPagina);
-    public List<D> listaDetalle(int id);
+    
+    public List<T> listar(String texto, int totalPorPagina, int numPagina); 
+    public List<D> listarDetalle(int id);
     public boolean insertar(T obj);
     public boolean anular(int id);
     public int total();
-    public boolean existen(String texto1, String texto2);
+    public boolean existe(String texto1, String texto2);
+    
 }

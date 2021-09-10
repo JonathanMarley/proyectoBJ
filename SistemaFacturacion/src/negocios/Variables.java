@@ -7,13 +7,13 @@ package negocios;
 
 /**
  *
- * @author Usuario
+ * @author 10bra
  */
 public class Variables {
     
-    //LAS VARIABLES ESTATICAS PUEDEN SER INVOCADA DESDE CUALQUIER PARTE(CLASE O ARCHIVO DEL PROYECTO)
-   
-    public static int  USUARIO_ID;
+    //LAS VARIABLES ESTATICAS PUEDEN SER INVOCADAS DESDE CUALQUIER PARTE(CLASE O ARCHIVO) DEL PROYECTO
+    
+    public static int USUARIO_ID;
     public static int ROL_ID;
     public static String ROL_NOMBRE;
     public static String USUARIO_NOMBRE;

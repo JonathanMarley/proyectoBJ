@@ -7,20 +7,17 @@ package entidades;
 
 /**
  *
- * @author Usuario
+ * @author 10bra
  */
 public class DetalleIngreso {
     private int id;
-    private int ingresoId;
+    private int ingresoId; 
     private int articuloId;
     private String articuloCodigo;
     private String articuloNombre;
     private int cantidad;
     private double precio;
     private double subTotal;
-
-    public DetalleIngreso() {
-    }
 
     public DetalleIngreso(int id, int ingresoId, int articuloId, String articuloCodigo, String articuloNombre, int cantidad, double precio, double subTotal) {
         this.id = id;
@@ -31,6 +28,9 @@ public class DetalleIngreso {
         this.cantidad = cantidad;
         this.precio = precio;
         this.subTotal = subTotal;
+    }
+
+    public DetalleIngreso() {
     }
 
     public int getId() {
@@ -101,4 +101,5 @@ public class DetalleIngreso {
     public String toString() {
         return "DetalleIngreso{" + "id=" + id + ", ingresoId=" + ingresoId + ", articuloId=" + articuloId + ", articuloCodigo=" + articuloCodigo + ", articuloNombre=" + articuloNombre + ", cantidad=" + cantidad + ", precio=" + precio + ", subTotal=" + subTotal + '}';
     }
+    
 }

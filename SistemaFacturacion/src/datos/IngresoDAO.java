@@ -7,27 +7,27 @@ package datos;
 
 import datos.interfaces.IIngresoInterface;
 import entidades.DetalleIngreso;
-import entidades.Ingresos;
+import entidades.Ingreso;
 import java.util.List;
 
 /**
  *
- * @author Usuario
+ * @author 10bra
  */
-public class IngresoDAO implements IIngresoInterface<Ingresos, DetalleIngreso>{
+public class IngresoDAO implements IIngresoInterface<Ingreso, DetalleIngreso>{
 
     @Override
-    public List<Ingresos> listar(String texto, int totalPorPagina, int numPagina) {
+    public List<Ingreso> listar(String texto, int totalPorPagina, int numPagina) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<DetalleIngreso> listaDetalle(int id) {
+    public List<DetalleIngreso> listarDetalle(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean insertar(Ingresos obj) {
+    public boolean insertar(Ingreso obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -42,7 +42,7 @@ public class IngresoDAO implements IIngresoInterface<Ingresos, DetalleIngreso>{
     }
 
     @Override
-    public boolean existen(String texto1, String texto2) {
+    public boolean existe(String texto1, String texto2) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
