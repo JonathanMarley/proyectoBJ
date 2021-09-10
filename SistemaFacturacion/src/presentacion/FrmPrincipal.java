@@ -5,6 +5,7 @@
  */
 package presentacion;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,40 +60,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }
 
-    //Otorgar permiso segun el rol
-    private void cargarOpcionesMenu() {
-        if (negocios.Variables.ROL_NOMBRE.equals("Administrador")) {
-            menuAlmacen.setEnabled(true);
-            menuCompras.setEnabled(true);
-            menuVentas.setEnabled(true);
-            menuAcceso.setEnabled(true);
-            itemConsultaCompras.setEnabled(true);
-            itemConsultaVentas.setEnabled(true);
-
-        } else if (negocios.Variables.ROL_NOMBRE.equals("Almacenero")) {
-            menuAlmacen.setEnabled(true);
-            menuCompras.setEnabled(true);
-            menuVentas.setEnabled(false);
-            menuAcceso.setEnabled(false);
-            itemConsultaCompras.setEnabled(true);
-            itemConsultaVentas.setEnabled(false);
-
-        } else if (negocios.Variables.ROL_NOMBRE.equals("Vendedor")) {
-            menuAlmacen.setEnabled(true);
-            menuCompras.setEnabled(false);
-            menuVentas.setEnabled(true);
-            menuAcceso.setEnabled(false);
-            itemConsultaCompras.setEnabled(false);
-            itemConsultaVentas.setEnabled(true);
-        } else {
-            menuAlmacen.setEnabled(false);
-            menuCompras.setEnabled(false);
-            menuVentas.setEnabled(false);
-            menuAcceso.setEnabled(false);
-            itemConsultaCompras.setEnabled(false);
-            itemConsultaVentas.setEnabled(false);
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,24 +72,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         escritorio = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
-        menuAlmacen = new javax.swing.JMenu();
+        mnuAlmacen = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
-        menuVentas = new javax.swing.JMenu();
+        mnuVentas = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
-        menuCompras = new javax.swing.JMenu();
+        mnuCompras = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
         menuConsultas = new javax.swing.JMenu();
         itemConsultaCompras = new javax.swing.JMenuItem();
         itemConsultaVentas = new javax.swing.JMenuItem();
-        menuAcceso = new javax.swing.JMenu();
+        mnuAcceso = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         menuServicios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,10 +98,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuBar.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         menuBar.setPreferredSize(new java.awt.Dimension(181, 45));
 
-        menuAlmacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/almacen.png"))); // NOI18N
-        menuAlmacen.setMnemonic('f');
-        menuAlmacen.setText("Almacen");
-        menuAlmacen.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        mnuAlmacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/almacen.png"))); // NOI18N
+        mnuAlmacen.setMnemonic('f');
+        mnuAlmacen.setText("Almacen");
+        mnuAlmacen.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         openMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -146,7 +113,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 openMenuItemActionPerformed(evt);
             }
         });
-        menuAlmacen.add(openMenuItem);
+        mnuAlmacen.add(openMenuItem);
 
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         saveMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -158,14 +125,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 saveMenuItemActionPerformed(evt);
             }
         });
-        menuAlmacen.add(saveMenuItem);
+        mnuAlmacen.add(saveMenuItem);
 
-        menuBar.add(menuAlmacen);
+        menuBar.add(mnuAlmacen);
 
-        menuVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Compra.png"))); // NOI18N
-        menuVentas.setMnemonic('e');
-        menuVentas.setText("Ventas");
-        menuVentas.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        mnuVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Compra.png"))); // NOI18N
+        mnuVentas.setMnemonic('e');
+        mnuVentas.setText("Ventas");
+        mnuVentas.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         cutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         cutMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -177,21 +144,21 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 cutMenuItemActionPerformed(evt);
             }
         });
-        menuVentas.add(cutMenuItem);
+        mnuVentas.add(cutMenuItem);
 
         copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         copyMenuItem.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         copyMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/PagoVentas.png"))); // NOI18N
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Ventas");
-        menuVentas.add(copyMenuItem);
+        mnuVentas.add(copyMenuItem);
 
-        menuBar.add(menuVentas);
+        menuBar.add(mnuVentas);
 
-        menuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/carro.png"))); // NOI18N
-        menuCompras.setMnemonic('h');
-        menuCompras.setText("Compras");
-        menuCompras.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        mnuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/carro.png"))); // NOI18N
+        mnuCompras.setMnemonic('h');
+        mnuCompras.setText("Compras");
+        mnuCompras.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         contentMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/proveedor.png"))); // NOI18N
         contentMenuItem.setMnemonic('c');
@@ -201,7 +168,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 contentMenuItemActionPerformed(evt);
             }
         });
-        menuCompras.add(contentMenuItem);
+        mnuCompras.add(contentMenuItem);
 
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Ingresos.png"))); // NOI18N
         aboutMenuItem.setMnemonic('a');
@@ -211,9 +178,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 aboutMenuItemActionPerformed(evt);
             }
         });
-        menuCompras.add(aboutMenuItem);
+        mnuCompras.add(aboutMenuItem);
 
-        menuBar.add(menuCompras);
+        menuBar.add(mnuCompras);
 
         menuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/consulta.png"))); // NOI18N
         menuConsultas.setText("Consultas");
@@ -236,9 +203,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuConsultas);
 
-        menuAcceso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Acceso 2.png"))); // NOI18N
-        menuAcceso.setText("Acceso");
-        menuAcceso.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        mnuAcceso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Acceso 2.png"))); // NOI18N
+        mnuAcceso.setText("Acceso");
+        mnuAcceso.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         jMenuItem2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Roles.png"))); // NOI18N
@@ -248,7 +215,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        menuAcceso.add(jMenuItem2);
+        mnuAcceso.add(jMenuItem2);
 
         jMenuItem3.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Acceso.png"))); // NOI18N
@@ -258,9 +225,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        menuAcceso.add(jMenuItem3);
+        mnuAcceso.add(jMenuItem3);
 
-        menuBar.add(menuAcceso);
+        menuBar.add(mnuAcceso);
 
         menuServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/empleado.png"))); // NOI18N
         menuServicios.setText("Mas Servicios");
@@ -276,20 +243,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(menuServicios);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/flecha.png"))); // NOI18N
-        jMenu4.setText("Salir");
-        jMenu4.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu1.setText("Salir");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
+                jMenu1MouseClicked(evt);
             }
         });
-        jMenu4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu4ActionPerformed(evt);
-            }
-        });
-        menuBar.add(jMenu4);
+        menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
 
@@ -306,11 +266,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenu4MouseClicked
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         // TODO add your handling code here:
@@ -380,6 +335,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenu1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -423,17 +383,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem itemConsultaCompras;
     private javax.swing.JMenuItem itemConsultaVentas;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenu menuAcceso;
-    private javax.swing.JMenu menuAlmacen;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenu menuCompras;
     private javax.swing.JMenu menuConsultas;
     private javax.swing.JMenu menuServicios;
-    private javax.swing.JMenu menuVentas;
+    private javax.swing.JMenu mnuAcceso;
+    private javax.swing.JMenu mnuAlmacen;
+    private javax.swing.JMenu mnuCompras;
+    private javax.swing.JMenu mnuVentas;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
