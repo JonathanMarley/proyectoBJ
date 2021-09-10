@@ -58,6 +58,7 @@ public class FrmArticulo extends javax.swing.JInternalFrame {
         tabGeneral.setEnabledAt(1, false);
         txtId.setVisible(false);
         this.accion = "guardar";
+        System.out.println("");
     }
     
     private void cargarCategorias() {
