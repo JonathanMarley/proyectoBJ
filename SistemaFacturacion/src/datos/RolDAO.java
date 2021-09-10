@@ -25,15 +25,13 @@ public class RolDAO {
     private boolean resp;
     private ResultSet rs;
 
-    public RolDAO(Conexion CON) {
-        this.CON = CON;
+    public RolDAO() {
+        this.CON = Conexion.getInstancia();
     }
 
     public List<Rol> listar() {
         List<Rol> registros = new ArrayList();
-
-        
-            
+  
             try {
                 ps = CON.conectar().prepareStatement("SELECT id FROM rol");
                 rs = ps.executeQuery();
@@ -50,19 +48,17 @@ public class RolDAO {
                 CON.desconectar();
             }
             return registros;
-       
-        
-        
-
     }
 
     public List<Rol> seleccionar() {
         List<Rol> registros = new ArrayList();
         try {
-            ps = CON.conectar().prepareStatement("SELECT id, nombre, FROM rol ORDER BY nombre ASC");
+            ps = CON.conectar().prepareStatement("SELECT id, nombre FROM rol ORDER BY nombre ASC");
+            rs = ps.executeQuery();
             while (rs.next()) {
                 registros.add(new Rol(rs.getInt(1), rs.getString(2)));
             }
+            
             ps.close();
             rs.close();
         } catch (SQLException e) {
