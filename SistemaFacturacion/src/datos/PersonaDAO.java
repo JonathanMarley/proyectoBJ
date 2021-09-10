@@ -35,10 +35,12 @@ public class PersonaDAO implements IPaginadoInterface<Persona> {
         List<Persona> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("SELECT P.id, P.tipo_persona, P.nombre, P.tipo_documento, P.num_documento, "
-             + "P.direccion, P.telefono, P.email, P.activo FROM persona P  WHERE P.nombre LIKE ? ORDER BY P.id ASC LIMIT ?,?"); 
+             + "P.direccion, P.telefono, P.email, P.activo FROM persona P  WHERE P.nombre LIKE ?  ORDER BY P.id ASC LIMIT ?,?"); 
             ps.setString(1, "%" + texto + "%");
+            
             ps.setInt(2,(numPaginas - 1) * totalPorPagina);
             ps.setInt(3, totalPorPagina);
+           
             rs = ps.executeQuery();
             
             while (rs.next()) {

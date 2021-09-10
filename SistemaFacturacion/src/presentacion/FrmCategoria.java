@@ -98,7 +98,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         btnDesactivar = new javax.swing.JButton();
         btnVer = new javax.swing.JButton();
         lblTotalRegistros = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -177,8 +177,6 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
 
         lblTotalRegistros.setText("Registros");
 
-        jTextField1.setText("jTextField1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -199,8 +197,8 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                         .addGap(0, 89, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(248, 248, 248)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -218,7 +216,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                     .addComponent(btnBuscar)
                     .addComponent(btnNuevo)
                     .addComponent(btnEditar)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
@@ -491,10 +489,10 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblTotalRegistros;
     private javax.swing.JTabbedPane tabGeneral;
     private javax.swing.JTable tablaListado;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;

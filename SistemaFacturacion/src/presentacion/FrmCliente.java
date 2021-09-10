@@ -199,6 +199,12 @@ public class FrmCliente extends javax.swing.JInternalFrame {
 
         jLabel2.setText("N° Pagina");
 
+        cboNumPagina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboNumPaginaActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Total de registros por paginas");
 
         cboTotalPorPagina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "20", "50", "100", "200", "500" }));
@@ -600,6 +606,10 @@ public class FrmCliente extends javax.swing.JInternalFrame {
             this.mensaje("Seleccione 1 registro a editar", "Error");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void cboNumPaginaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNumPaginaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboNumPaginaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

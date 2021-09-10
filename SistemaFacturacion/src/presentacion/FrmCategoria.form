@@ -72,8 +72,8 @@
                               <EmptySpace min="0" pref="89" max="32767" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="248" max="-2" attributes="0"/>
+                              <Component id="txtBuscar" min="-2" pref="302" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnBuscar" min="-2" pref="108" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnNuevo" min="-2" pref="107" max="-2" attributes="0"/>
@@ -95,7 +95,7 @@
                           <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="287" max="-2" attributes="0"/>
@@ -210,10 +210,7 @@
                 <Property name="text" type="java.lang.String" value="Registros"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jTextField1"/>
-              </Properties>
+            <Component class="javax.swing.JTextField" name="txtBuscar">
             </Component>
           </SubComponents>
         </Container>
