@@ -61,7 +61,7 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
     public boolean insertar(Usuario obj) {
         resp = false;
         try {
-            ps = CON.conectar().prepareStatement("INSERT INT usuario (rol_id, nombre,tipo_documento,num_documento,direccion,telefono,email,clave,activo) VALUES (?,?,?,?,?,?,?,?,1)");
+            ps = CON.conectar().prepareStatement("INSERT INTO usuario (rol_id, nombre,tipo_documento,num_documento,direccion,telefono,email,clave,activo) VALUES (?,?,?,?,?,?,?,?,1)");
             ps.setInt(1, obj.getRolId());
             ps.setString(2, obj.getNombreUsuario());
             ps.setString(3, obj.getTipodocumento());
@@ -87,8 +87,7 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
     public boolean actualizar(Usuario obj) {
         resp = false;
         try {
-            ps = CON.conectar().prepareStatement("UPDATE usuario SET rol_id=?, nombre=?, tipo_documento=?, num_documento=?, direccion=?, telefono=?, email=?, clave=?, WHERE id=? ");
-            ps.setInt(1, obj.getRolId());
+            ps = CON.conectar().prepareStatement("UPDATE usuario SET rol_id=?, nombre=?, tipo_documento=?, num_documento=?, direccion=?, telefono=?, email=?, clave=? WHERE id=? ");
             ps.setInt(1, obj.getRolId());
             ps.setString(2, obj.getNombreUsuario());
             ps.setString(3, obj.getTipodocumento());
@@ -97,6 +96,8 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
             ps.setString(6, obj.getTelefono());
             ps.setString(7, obj.getEmail());
             ps.setString(8, obj.getClave());
+            ps.setInt(9, obj.getId());
+            
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }
@@ -172,7 +173,14 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
         try {
             ps = CON.conectar().prepareStatement("SELECT email FROM usuario WHERE email=?");
             ps.setString(1, texto);
+            rs = ps.executeQuery();
             rs.last();
+            if (rs.getRow() > 0) {
+                resp = true;
+            }
+            
+            ps.close();
+            rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "UsuarioDAO::existente->" + e.getMessage());
 

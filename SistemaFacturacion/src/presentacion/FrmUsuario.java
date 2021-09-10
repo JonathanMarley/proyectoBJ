@@ -23,6 +23,8 @@ public class FrmUsuario extends javax.swing.JInternalFrame {
         initComponents();
         this.CONTROL = new UsuarioControl();
         this.cargarRol();
+
+        this.CONTROL.actualizar(10, 2,"Jonthan Actaulizado", "IDENTIDAD", "080520001456", "Las Lomas", "999999999","administrador@correo.com", "administrador@correo.com", "administradorActualizado");
     }
 
     private void cargarRol() {
