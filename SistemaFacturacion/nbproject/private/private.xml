@@ -9,6 +9,7 @@
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/ArticuloControl.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/IngresoDAO.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmPrincipal.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmSeleccionarArticulo.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmArticulo.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/PersonaDAO.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/negocios/PersonaControl.java</file>
@@ -20,6 +21,7 @@
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/ArticuloDao.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/datos/interfaces/IIngresoInterface.java</file>
             <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmCliente.java</file>
+            <file>file:/C:/Users/Usuario/Documents/Repositorios/proyectoBJ/SistemaFacturacion/src/presentacion/FrmCategoria.java</file>
         </group>
     </open-files>
 </project-private>

@@ -520,7 +520,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        this.pestaniaFrame("Manteminento");
+        this.pestaniaFrame("Manteminento");  
          this.accion = "Guardar";
          btnGuardar.setText("Guardar");
     }//GEN-LAST:event_btnNuevoActionPerformed
