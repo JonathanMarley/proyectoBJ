@@ -34,7 +34,7 @@ public class UsuarioDAO implements IPaginadoInterface<Usuario> {
     public List<Usuario> listar(String texto, int totalPorPagina, int numPagina, String persona) {
         List<Usuario> registros = new ArrayList();
         try {
-            ps = CON.conectar().prepareStatement("SELECT u.id, u.rol_id,  u.nombre, u.tipo_documento, u.num_documento, u.direccion, u.telefono, u.email, u.clave, u.activo FROM usuario  WHERE u.nombre LIKE ? ORDER BY u.id ASC LIMIT ?,?");
+            ps = CON.conectar().prepareStatement("SELECT u.id, u.rol_id, r.nombre as rol_nombre, u.nombre, u.tipo_documento, u.num_documento, u.direccion, u.telefono, u.email, u.clave, u.activo FROM usuario u INNER JOIN rol r ON r.id = u.rol_id WHERE u.nombre LIKE ? ORDER BY u.id ASC LIMIT ?,?");
             ps.setString(1, "%" + texto + "%");
             ps.setInt(2, (numPagina - 1) * totalPorPagina);
             ps.setInt(3, totalPorPagina);

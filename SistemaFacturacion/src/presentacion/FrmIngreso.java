@@ -6,20 +6,101 @@
 package presentacion;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author 10bra
  */
 public class FrmIngreso extends javax.swing.JInternalFrame {
+
     public JFrame contenedor; //PARA LA VENTANA MODAL
-    
+
+    private String accion;
+    private String nombreAnt;
+    //private final IngresoControl Control;
+    private int totalPorPagina = 10;
+    private int numPagina = 1;
+    private boolean primerCargar = true;
+    private int totalRegistros;
+
     /**
      * Creates new form FrmIngreso
      */
     public FrmIngreso(JFrame frmP) {
         initComponents();
         this.contenedor = frmP; //PARA LA VENTANA MODAL
+        txtId.setVisible(false);
+        tabGeneral.setEnabledAt(1,false);
+    }
+
+//   private void paginar() {
+//        int totalPaginas;
+//
+//        this.totalRegistros = this.CONTROL.total();
+//        this.totalPorPagina = Integer.parseInt((String) cboTotalPorPagina.getSelectedItem());
+//        totalPaginas = (int) (Math.ceil((double) this.totalRegistros / this.totalPorPagina));
+//        if (totalPaginas == 0) {
+//            totalPaginas = 1;
+//        }
+//        cboNumPagina.removeAllItems();
+//
+//        for (int i = 1; i <= totalPaginas; i++) {
+//            cboNumPagina.addItem(Integer.toString(i));
+//        }
+//        cboNumPagina.setSelectedIndex(0);
+//    }
+//   private void listar(String texto, boolean paginar){
+//         this.totalPorPagina =  Integer.parseInt((String) cboTotalPorPagina.getSelectedItem());
+//         if ((String) cboNumPaginas.getSelectedItem() != null) {
+//             this.numPagina = Integer.parseInt((String) cboNumPaginas.getSelectedItem());
+//         }
+//         if (paginar) {
+//             tablaListado.setModel(this.CONTROL.listar(texto,this.totalPorPagina, this.numPagina, "Proveedor"));
+//         }else{
+//             tablaListado.setModel(this.CONTROL.listar(texto,this.totalPorPagina, 1, "Proveedor"));
+//         }
+//         TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
+//         tablaListado.setRowSorter(orden);
+//         //this.ocularColumnas();
+//         lblTotalRegistros.setText(" Mostrado " + this.CONTROL.totalMostrados() + "de un total " + this.CONTROL.total() + "registros");
+//         
+//     } 
+    private void pestaniaFrame(String tipo) {
+        if (tipo.equalsIgnoreCase("listado")) {
+            tabGeneral.setSelectedIndex(0);
+            tabGeneral.setEnabledAt(0, true);
+            tabGeneral.setEnabledAt(1, false);
+        } else {
+            tabGeneral.setEnabledAt(1, true);
+            tabGeneral.setEnabledAt(0, false);
+            tabGeneral.setSelectedIndex(1);
+
+        }
+    }
+
+    private void limpiar() {
+        txtNombreProveedor.setText("");
+        txtId.setText("");
+        txtSerieComprobante.setText("");
+        txtNumComprobante.setText("");
+        txtImpuesto.setText("0.18");
+
+        this.accion = "guardar";
+
+        txtTotal.setText("");
+        txtSubTotal.setText("");
+        txtTotalImpuesto.setText("");
+        btnGuardar.setVisible(true);
+    }
+
+    private void mensaje(String mensaje, String tipo) {
+        if (tipo.equals("correcto")) {
+            JOptionPane.showMessageDialog(this, mensaje, "ProyectoBj", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, mensaje, "ProyectoBj", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -31,7 +112,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabGeneral = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -90,6 +171,11 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         btnBuscar.setText("Buscar");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnDesactivar.setText("Anular");
 
@@ -174,7 +260,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                 .addContainerGap(166, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Listado", jPanel1);
+        tabGeneral.addTab("Listado", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -194,6 +280,11 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         });
 
         btnVerArticulos.setText("Ver");
+        btnVerArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerArticulosActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Impuesto (*)");
 
@@ -222,8 +313,18 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         jLabel10.setText("(*) Indica que es un campo obligatorio");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Subtotal");
 
@@ -340,17 +441,17 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Mantenimiento", jPanel2);
+        tabGeneral.addTab("Mantenimiento", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(tabGeneral)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(tabGeneral)
         );
 
         pack();
@@ -363,8 +464,66 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private void btnSeleccionarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarProveedorActionPerformed
         // TODO add your handling code here:
         FrmSeleccionarProveedorC frm = new FrmSeleccionarProveedorC(contenedor, this, true);
-        frm.toFront(); //MUESTRATE AL FRENTE O APARECE
+        frm.toFront();//MUESTRATE AL FRENTE O APARECETE         
     }//GEN-LAST:event_btnSeleccionarProveedorActionPerformed
+
+    private void btnVerArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerArticulosActionPerformed
+        // TODO add your handling code here:
+        FrmSeleccionarArticulo frm = new FrmSeleccionarArticulo(contenedor, this, true);
+        frm.toFront();
+    }//GEN-LAST:event_btnVerArticulosActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (txtId.getText().length() > 20) {
+            this.mensaje("Debes ingresar un numero de documento y no debe ser mayor a 50 caracteres, es obligatorio", "error");
+            txtId.requestFocus();
+            return;
+        }
+        if (txtSerieComprobante.getText().length() > 20) {
+            this.mensaje("Debes ingresar un numero telefonico y no debe ser mayor a 20 caracteres es, obligatorio", "error");
+            txtSerieComprobante.requestFocus();
+            return;
+        }
+
+        if (txtNumComprobante.getText().length() > 15) {
+            this.mensaje("Debes ingresar una direccion y no debe ser mayor a 100 caracteres, es obligatorio", "error");
+            txtNumComprobante.requestFocus();
+        }
+
+//        String resp;
+//        if (this.accion.equals("editar")) {
+//            //EDITAR
+//            //Categoria seleccionado = (Categoria) cboCategoria.getSelectedItem();
+//            //resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), "Proveedor", txtNombre.getText(), nombreAnt,  (String) cboTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),txtEmail.getText());
+//            resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), cboTipoComprobante.getSelectedItem(), txtSerieComprobante.getText(), txtNumComprobante.getText(), Double.parseDouble(txtTotal.getText()));
+//            if (resp.equals("OK")) {
+//                this.mensaje("Actualizar correctamente ", "Correcto");
+//                this.limpiar();
+//                this.listar("", false);
+//                tabGeneral.setSelectedIndex(1);//Lleva a la pestaña de mantenimineto
+//                tabGeneral.setEnabledAt(0, true);//Pestaña Mantenimiento activa
+//                tabGeneral.setEnabledAt(1, false);//Pestaña listado desactivada
+//                this.pestaniaFrame("Listado");
+//            } else {
+//                this.mensaje(resp, "error");
+//            }
+//        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.pestaniaFrame("Listado");
+        this.limpiar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        this.pestaniaFrame("Manteminento");  
+         this.accion = "Guardar";
+         btnGuardar.setText("Guardar");
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -398,8 +557,8 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblTotalRegistros;
+    private javax.swing.JTabbedPane tabGeneral;
     private javax.swing.JTable tablaDetalles;
     private javax.swing.JTable tablaListado;
     private javax.swing.JTextField txtBuscar;

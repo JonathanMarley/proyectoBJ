@@ -38,7 +38,7 @@ public class Usuario {
         this.email = email;
         this.activo = activo;
     }
-
+    
     public Usuario(int id, int rolId, String nombre, String nombreUsuario, String tipodocumento, String numDocumento, String direccion, String telefono, String email, String clave, boolean activo) {
         this.id = id;
         this.rolId = rolId;

@@ -56,7 +56,7 @@ public class UsuarioControl {
             List<Usuario> lista = new ArrayList();
             lista.addAll(DATOS.listar(texto, totalPorPagina, numPagina,""));
 
-            String[] titulos = {"Id", "Rol ID", "Usuario", "DOcumento", "Num Documento", "Direccion", "Telefono", "Email", "Clave", "Estado"};
+            String[] titulos = {"Id", "Rol ID", "Rol", "Usuario", "Documento", "Num Documento", "Direccion", "Telefono", "Email", "Clave", "Estado"};
             this.modeloTabla = new DefaultTableModel(null, titulos);
 
             String estado;
@@ -126,7 +126,7 @@ public class UsuarioControl {
                 obj.setEmail(email);
                 obj.setClave(this.encriptar(clave));
 
-                System.out.println("PASSWORD: " + this.encriptar(clave));
+                //System.out.println("PASSWORD: " + this.encriptar(clave));
                 if (DATOS.insertar(obj)) {
                     return "OK";
                 } else {

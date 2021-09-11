@@ -45,6 +45,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         
     }
     
+       
         private void paginar(){
         try {
             

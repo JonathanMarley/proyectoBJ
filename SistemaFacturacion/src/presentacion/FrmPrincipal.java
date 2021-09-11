@@ -5,6 +5,7 @@
  */
 package presentacion;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }
 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,15 +81,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuCompras = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
-        mnuConsultas = new javax.swing.JMenu();
+        menuConsultas = new javax.swing.JMenu();
         itemConsultaCompras = new javax.swing.JMenuItem();
         itemConsultaVentas = new javax.swing.JMenuItem();
         mnuAcceso = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        mnuServicios = new javax.swing.JMenu();
+        menuServicios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,21 +182,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuCompras);
 
-        mnuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/consulta.png"))); // NOI18N
-        mnuConsultas.setText("Consultas");
-        mnuConsultas.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        menuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/consulta.png"))); // NOI18N
+        menuConsultas.setText("Consultas");
+        menuConsultas.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
         itemConsultaCompras.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         itemConsultaCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/ConsultarCompras.png"))); // NOI18N
         itemConsultaCompras.setText("Consulta Compras");
-        mnuConsultas.add(itemConsultaCompras);
+        menuConsultas.add(itemConsultaCompras);
 
         itemConsultaVentas.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         itemConsultaVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/ConsultarVentas.png"))); // NOI18N
         itemConsultaVentas.setText("Consulta Ventas");
-        mnuConsultas.add(itemConsultaVentas);
+        itemConsultaVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConsultaVentasActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(itemConsultaVentas);
 
-        menuBar.add(mnuConsultas);
+        menuBar.add(menuConsultas);
 
         mnuAcceso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Acceso 2.png"))); // NOI18N
         mnuAcceso.setText("Acceso");
@@ -222,34 +229,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuAcceso);
 
-        mnuServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/empleado.png"))); // NOI18N
-        mnuServicios.setText("Mas Servicios");
-        mnuServicios.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
+        menuServicios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/empleado.png"))); // NOI18N
+        menuServicios.setText("Mas Servicios");
+        menuServicios.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
 
-        jMenuItem1.setText("Caluladora");
+        jMenuItem1.setText("Calculadora");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        mnuServicios.add(jMenuItem1);
+        menuServicios.add(jMenuItem1);
 
-        menuBar.add(mnuServicios);
+        menuBar.add(menuServicios);
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/flecha.png"))); // NOI18N
-        jMenu4.setText("Salir");
-        jMenu4.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu1.setText("Salir");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
+                jMenu1MouseClicked(evt);
             }
         });
-        jMenu4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu4ActionPerformed(evt);
-            }
-        });
-        menuBar.add(jMenu4);
+        menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
 
@@ -266,11 +266,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenu4MouseClicked
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         // TODO add your handling code here:
@@ -315,9 +310,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+    private void itemConsultaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultaVentasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu4ActionPerformed
+    }//GEN-LAST:event_itemConsultaVentasActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
@@ -330,7 +325,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
@@ -339,6 +334,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenu1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -383,16 +383,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuItem itemConsultaCompras;
     private javax.swing.JMenuItem itemConsultaVentas;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuConsultas;
+    private javax.swing.JMenu menuServicios;
     private javax.swing.JMenu mnuAcceso;
     private javax.swing.JMenu mnuAlmacen;
     private javax.swing.JMenu mnuCompras;
-    private javax.swing.JMenu mnuConsultas;
-    private javax.swing.JMenu mnuServicios;
     private javax.swing.JMenu mnuVentas;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
